@@ -1,1 +1,1 @@
-# comp-wellness-app
+# Wellness Hub
