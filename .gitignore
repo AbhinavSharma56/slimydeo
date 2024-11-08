@@ -1,0 +1,7 @@
+.vs/*
+.vscode/*
+wellness-hub.sln
+
+**/bin/**
+**/obj/Debug/**
+**/obj/**
