@@ -1,7 +1,10 @@
 .vs/*
 .vscode/*
+.github/*
 wellness-hub.sln
 
 **/bin/**
 **/obj/Debug/**
 **/obj/**
+
+**/Migrations/**
