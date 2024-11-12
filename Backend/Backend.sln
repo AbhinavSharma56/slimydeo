@@ -3,7 +3,55 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServiceAPI", "AuthServiceAPI\AuthServiceAPI.csproj", "{DF607477-839C-43F9-9EB9-424F76F49178}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DietServiceAPI", "DietServiceAPI\DietServiceAPI.csproj", "{95DB09E0-18A7-4A7B-BA30-38E3A59BE18F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExerciseServiceAPI", "ExerciseServiceAPI\ExerciseServiceAPI.csproj", "{02BA0DD4-4063-4598-9099-8FF8EBFB208C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{6D09EB0E-9CDC-4703-9E56-23BFE4E9A632}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMetricsServiceAPI", "HealthMetricsServiceAPI\HealthMetricsServiceAPI.csproj", "{BED748EC-9B90-41BB-8EA4-AF52AA31F47A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MentalHealthServiceAPI", "MentalHealthServiceAPI\MentalHealthServiceAPI.csproj", "{FEB7D369-7403-4004-B4FC-F81EEAF73171}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserServiceAPI", "UserServiceAPI\UserServiceAPI.csproj", "{645AB01C-4585-4956-9746-73DFB53D2A26}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF607477-839C-43F9-9EB9-424F76F49178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF607477-839C-43F9-9EB9-424F76F49178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF607477-839C-43F9-9EB9-424F76F49178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF607477-839C-43F9-9EB9-424F76F49178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95DB09E0-18A7-4A7B-BA30-38E3A59BE18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95DB09E0-18A7-4A7B-BA30-38E3A59BE18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95DB09E0-18A7-4A7B-BA30-38E3A59BE18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95DB09E0-18A7-4A7B-BA30-38E3A59BE18F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02BA0DD4-4063-4598-9099-8FF8EBFB208C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02BA0DD4-4063-4598-9099-8FF8EBFB208C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02BA0DD4-4063-4598-9099-8FF8EBFB208C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02BA0DD4-4063-4598-9099-8FF8EBFB208C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D09EB0E-9CDC-4703-9E56-23BFE4E9A632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D09EB0E-9CDC-4703-9E56-23BFE4E9A632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D09EB0E-9CDC-4703-9E56-23BFE4E9A632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D09EB0E-9CDC-4703-9E56-23BFE4E9A632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED748EC-9B90-41BB-8EA4-AF52AA31F47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED748EC-9B90-41BB-8EA4-AF52AA31F47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED748EC-9B90-41BB-8EA4-AF52AA31F47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED748EC-9B90-41BB-8EA4-AF52AA31F47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB7D369-7403-4004-B4FC-F81EEAF73171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB7D369-7403-4004-B4FC-F81EEAF73171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB7D369-7403-4004-B4FC-F81EEAF73171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB7D369-7403-4004-B4FC-F81EEAF73171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{645AB01C-4585-4956-9746-73DFB53D2A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{645AB01C-4585-4956-9746-73DFB53D2A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{645AB01C-4585-4956-9746-73DFB53D2A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{645AB01C-4585-4956-9746-73DFB53D2A26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
