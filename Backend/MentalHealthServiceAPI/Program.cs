@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MentalHealthServiceAPI.Data;
+using MentalHealthServiceAPI.Repository;
 
 namespace MentalHealthServiceAPI
 {
@@ -9,10 +12,15 @@ namespace MentalHealthServiceAPI
 
             // Add services to the container.
 
+            builder.Services.AddTransient<IMentalHealthLogRepository, MentalHealthLogRepository>();
+            builder.Services.AddTransient<IMoodRepository, MoodRepository>();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<MentalHealthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MentalHealthDB")));
 
             var app = builder.Build();
 
@@ -26,7 +34,6 @@ namespace MentalHealthServiceAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

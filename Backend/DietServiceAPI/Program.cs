@@ -1,3 +1,6 @@
+using DietServiceAPI.Data;
+using DietServiceAPI.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietServiceAPI
 {
@@ -8,11 +11,13 @@ namespace DietServiceAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddTransient<IDietRepository, DietRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<DietDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DietDB")));
 
             var app = builder.Build();
 
