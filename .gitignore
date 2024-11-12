@@ -1,7 +1,6 @@
-.vs/*
-.vscode/*
-.github/*
-wellness-hub.sln
+**/.vs/**
+**/.vscode/**
+.github/**
 
 **/bin/**
 **/obj/Debug/**
