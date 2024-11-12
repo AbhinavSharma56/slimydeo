@@ -13,7 +13,7 @@ namespace DietServiceAPI.Data
             modelBuilder.Entity<Diet>(entity =>
             {
                 entity.HasKey(e => e.DietId);  // Set primary key
-                entity.Property(e => e.UserId).IsRequired();  // User associated with the diet entry
+                entity.Property(e => e.Username).IsRequired();  // User associated with the diet entry
                 entity.Property(e => e.FoodItem).IsRequired().HasMaxLength(100);  // Name of food item
                 entity.Property(e => e.Quantity).IsRequired();  // Quantity of food consumed
                 entity.Property(e => e.Calories).IsRequired();  // Calories in the food item

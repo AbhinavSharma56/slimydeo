@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DietServiceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Diet")]
     [ApiController]
     public class DietController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace DietServiceAPI.Controllers
             _dietRepository = dietRepository;
         }
 
-        // GET: api/diets
+        // GET: api/Diet
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -24,7 +24,7 @@ namespace DietServiceAPI.Controllers
             return Ok(diets);
         }
 
-        // GET: api/diet/5
+        // GET: api/Diet/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -36,7 +36,7 @@ namespace DietServiceAPI.Controllers
             return Ok(diet);
         }
 
-        // POST: api/diet
+        // POST: api/Diet
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Diet diet)
         {
@@ -49,7 +49,7 @@ namespace DietServiceAPI.Controllers
             return CreatedAtAction(nameof(Get), new { id = diet.DietId }, diet);
         }
 
-        // PUT: api/diet/5
+        // PUT: api/Diet/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Diet diet)
         {
@@ -65,7 +65,7 @@ namespace DietServiceAPI.Controllers
             }
 
             // Update the existing diet's fields
-            existingDiet.UserId = diet.UserId;
+            existingDiet.Username = diet.Username;
             existingDiet.FoodItem = diet.FoodItem;
             existingDiet.Quantity = diet.Quantity;
             existingDiet.Calories = diet.Calories;
@@ -76,7 +76,7 @@ namespace DietServiceAPI.Controllers
             return Ok("Diet updated successfully.");
         }
 
-        // DELETE: api/diet/5
+        // DELETE: api/Diet/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
