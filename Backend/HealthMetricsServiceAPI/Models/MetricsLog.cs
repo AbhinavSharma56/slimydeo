@@ -14,9 +14,5 @@ namespace HealthMetricsServiceAPI.Models
         public float Value { get; set; }
         [Required]
         public DateTime DateRecorded { get; set; }
-
-        // Navigation property to the Metric model
-        public Metric? Metric { get; set; }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using HealthMetricsServiceAPI.Models;
-using HealthMetricsServiceAPI.Services;
-using Microsoft.AspNetCore.Http;
+using HealthMetricsServiceAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthMetricsServiceAPI.Controllers
@@ -9,125 +8,97 @@ namespace HealthMetricsServiceAPI.Controllers
     [ApiController]
     public class HealthMetricsController : ControllerBase
     {
-        private readonly IHealthMetricsService _healthMetricsService;
+        private readonly IMetricRepository _metricRepository;
+        private readonly IMetricLogRepository _metricLogRepository;
 
-        public HealthMetricsController(IHealthMetricsService healthMetricsService)
+        public HealthMetricsController(IMetricRepository metricRepository, IMetricLogRepository metricLogRepository)
         {
-            _healthMetricsService = healthMetricsService;
+            _metricRepository = metricRepository;
+            _metricLogRepository = metricLogRepository;
         }
 
-        // GET: api/HealthMetrics/metrics
         [HttpGet("metrics")]
         public async Task<IActionResult> GetAllMetrics() =>
-            Ok(await _healthMetricsService.GetAllMetricsAsync());
+            Ok(await _metricRepository.GetAllMetricsAsync());
 
-        // GET: api/HealthMetrics/metrics/{id}
         [HttpGet("metrics/{id}")]
         public async Task<IActionResult> GetMetricById(int id)
         {
-            var metric = await _healthMetricsService.GetMetricByIdAsync(id);
-            if (metric == null)
-                return NotFound();
-            return Ok(metric);
+            var metric = await _metricRepository.GetMetricByIdAsync(id);
+            return metric == null ? NotFound() : Ok(metric);
         }
 
-        // POST: api/HealthMetrics/metrics
         [HttpPost("metrics")]
         public async Task<IActionResult> AddMetric([FromBody] Metric metric)
         {
-            await _healthMetricsService.AddMetricAsync(metric);
-            return CreatedAtAction(nameof(GetMetricById), new { id = metric.MetricId }, metric);
+            bool success = await _metricRepository.AddMetricAsync(metric);
+            return success ? CreatedAtAction(nameof(GetMetricById), new { id = metric.MetricId }, metric) : StatusCode(500, "Could not add metric.");
         }
 
-        // PUT: api/HealthMetrics/metrics/{id}
         [HttpPut("metrics/{id}")]
         public async Task<IActionResult> UpdateMetric(int id, [FromBody] Metric metric)
         {
-            if (id != metric.MetricId)
-                return BadRequest();
-
-            await _healthMetricsService.UpdateMetricAsync(metric);
-            return NoContent();
+            if (id != metric.MetricId) return BadRequest("Metric ID mismatch");
+            bool success = await _metricRepository.UpdateMetricAsync(metric);
+            return success ? NoContent() : StatusCode(500, "Could not update metric.");
         }
 
-        // DELETE: api/HealthMetrics/metrics/{id}
         [HttpDelete("metrics/{id}")]
         public async Task<IActionResult> DeleteMetric(int id)
         {
-            await _healthMetricsService.DeleteMetricAsync(id);
-            return NoContent();
+            bool success = await _metricRepository.DeleteMetricAsync(id);
+            return success ? NoContent() : StatusCode(500, "Could not delete metric.");
         }
 
-        // GET: api/HealthMetrics/metrics/logs/{userid}
         [HttpGet("metrics/logs/{userId}")]
         public async Task<IActionResult> GetMetricsLogsByUserId(int userId) =>
-            Ok(await _healthMetricsService.GetMetricsLogsByUserIdAsync(userId));
+            Ok(await _metricLogRepository.GetLogsByUserIdAsync(userId));
 
-        // GET: api/HealthMetrics/metrics/logs/7days/{userid}
         [HttpGet("metrics/logs/7days/{userId}")]
         public async Task<IActionResult> GetMetricsLogsForPast7Days(int userId)
         {
-            var logs = await _healthMetricsService.GetMetricsLogsForPast7DaysAsync(userId);
-            if (logs == null || !logs.Any())
-                return NotFound();
-
-            return Ok(logs);
+            var logs = await _metricLogRepository.GetLogsForPast7DaysAsync(userId);
+            return logs == null || !logs.Any() ? NotFound() : Ok(logs);
         }
 
-        // GET: api/HealthMetrics/metrics/logs
         [HttpGet("metrics/logs")]
-        public async Task<IActionResult> GetAllLogs()
-        {
-            var logs = await _healthMetricsService.GetAllLogsAsync();
-            return Ok(logs);
-        }
+        public async Task<IActionResult> GetAllLogs() =>
+            Ok(await _metricLogRepository.GetAllLogsAsync());
 
-        // GET: api/HealthMetrics/metrics/log/{id}
         [HttpGet("metrics/log/{id}")]
         public async Task<IActionResult> GetLogById(int id)
         {
-            var log = await _healthMetricsService.GetLogByIdAsync(id);
-            if (log == null)
-                return NotFound();
-            return Ok(log);
+            var log = await _metricLogRepository.GetLogByIdAsync(id);
+            return log == null ? NotFound() : Ok(log);
         }
 
-        // POST: api/HealthMetrics/metrics/logs
         [HttpPost("metrics/logs")]
         public async Task<IActionResult> AddLog([FromBody] MetricsLog log)
         {
-            await _healthMetricsService.AddLogAsync(log);
-            return CreatedAtAction(nameof(GetLogById), new { id = log.LogId }, log);
+            bool success = await _metricLogRepository.AddLogAsync(log);
+            return success ? CreatedAtAction(nameof(GetLogById), new { id = log.LogId }, log) : StatusCode(500, "Could not add log.");
         }
 
-        // PUT: api/HealthMetrics/metrics/logs/{id}
         [HttpPut("metrics/logs/{id}")]
         public async Task<IActionResult> UpdateLog(int id, [FromBody] MetricsLog log)
         {
-            if (id != log.LogId)
-                return BadRequest("Log ID mismatch");
-
-            await _healthMetricsService.UpdateLogAsync(log);
-            return NoContent();
+            if (id != log.LogId) return BadRequest("Log ID mismatch");
+            bool success = await _metricLogRepository.UpdateLogAsync(log);
+            return success ? NoContent() : StatusCode(500, "Could not update log.");
         }
 
-        // DELETE: api/HealthMetrics/metrics/logs/{id}
         [HttpDelete("metrics/logs/{id}")]
         public async Task<IActionResult> DeleteLog(int id)
         {
-            await _healthMetricsService.DeleteLogAsync(id);
-            return NoContent();
+            bool success = await _metricLogRepository.DeleteLogAsync(id);
+            return success ? NoContent() : StatusCode(500, "Could not delete log.");
         }
 
-        // GET: api/HealthMetrics/metrics/logs/last7/{userId}/{metricId}
         [HttpGet("metrics/logs/last7/{userId}/{metricId}")]
         public async Task<IActionResult> GetLast7Entries(int userId, int metricId)
         {
-            var logs = await _healthMetricsService.GetLast7EntriesAsync(userId, metricId);
-            if (logs == null || !logs.Any())
-                return NotFound();
-
-            return Ok(logs);
+            var logs = await _metricLogRepository.GetLast7EntriesAsync(userId, metricId);
+            return logs == null || !logs.Any() ? NotFound() : Ok(logs);
         }
     }
 }

@@ -1,6 +1,5 @@
 using HealthMetricsServiceAPI.Data;
 using HealthMetricsServiceAPI.Repositories;
-using HealthMetricsServiceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthMetricsServiceAPI
@@ -15,7 +14,6 @@ namespace HealthMetricsServiceAPI
             builder.Services.AddDbContext<HealthMetricsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IMetricRepository, MetricRepository>();
             builder.Services.AddScoped<IMetricLogRepository, MetricLogRepository>();
-            builder.Services.AddScoped<IHealthMetricsService, HealthMetricsService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

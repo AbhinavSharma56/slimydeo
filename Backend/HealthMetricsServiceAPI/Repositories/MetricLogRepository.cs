@@ -16,36 +16,11 @@ namespace HealthMetricsServiceAPI.Repositories
         public async Task<IEnumerable<MetricsLog>> GetAllLogsAsync() =>
             await _context.MetricsLogs.ToListAsync();
 
-        public async Task<MetricsLog> GetLogByIdAsync(int id) =>
+        public async Task<MetricsLog?> GetLogByIdAsync(int id) =>
             await _context.MetricsLogs.FindAsync(id);
 
         public async Task<IEnumerable<MetricsLog>> GetLogsByUserIdAsync(int userId) =>
             await _context.MetricsLogs.Where(log => log.UserId == userId).ToListAsync();
-
-        public async Task<IEnumerable<MetricsLog>> GetLogsByMetricIdAsync(int metricId) =>
-            await _context.MetricsLogs.Where(log => log.MetricId == metricId).ToListAsync();
-
-        public async Task AddLogAsync(MetricsLog log)
-        {
-            _context.MetricsLogs.Add(log);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateLogAsync(MetricsLog log)
-        {
-            _context.MetricsLogs.Update(log);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteLogAsync(int id)
-        {
-            var log = await GetLogByIdAsync(id);
-            if (log != null)
-            {
-                _context.MetricsLogs.Remove(log);
-                await _context.SaveChangesAsync();
-            }
-        }
 
         public async Task<IEnumerable<MetricsLog>> GetLogsForPast7DaysAsync(int userId)
         {
@@ -53,6 +28,27 @@ namespace HealthMetricsServiceAPI.Repositories
             return await _context.MetricsLogs
                                  .Where(log => log.UserId == userId && log.DateRecorded >= sevenDaysAgo)
                                  .ToListAsync();
+        }
+
+        public async Task<bool> AddLogAsync(MetricsLog log)
+        {
+            _context.MetricsLogs.Add(log);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateLogAsync(MetricsLog log)
+        {
+            _context.MetricsLogs.Update(log);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteLogAsync(int id)
+        {
+            var log = await GetLogByIdAsync(id);
+            if (log == null) return false;
+
+            _context.MetricsLogs.Remove(log);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<IEnumerable<MetricsLog>> GetLast7EntriesAsync(int userId, int metricId)

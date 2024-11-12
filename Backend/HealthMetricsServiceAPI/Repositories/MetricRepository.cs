@@ -16,29 +16,28 @@ namespace HealthMetricsServiceAPI.Repositories
         public async Task<IEnumerable<Metric>> GetAllMetricsAsync() =>
             await _context.Metrics.ToListAsync();
 
-        public async Task<Metric> GetMetricByIdAsync(int id) =>
+        public async Task<Metric?> GetMetricByIdAsync(int id) =>
             await _context.Metrics.FindAsync(id);
 
-        public async Task AddMetricAsync(Metric metric)
+        public async Task<bool> AddMetricAsync(Metric metric)
         {
             _context.Metrics.Add(metric);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task UpdateMetricAsync(Metric metric)
+        public async Task<bool> UpdateMetricAsync(Metric metric)
         {
             _context.Metrics.Update(metric);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteMetricAsync(int id)
+        public async Task<bool> DeleteMetricAsync(int id)
         {
             var metric = await GetMetricByIdAsync(id);
-            if (metric != null)
-            {
-                _context.Metrics.Remove(metric);
-                await _context.SaveChangesAsync();
-            }
+            if (metric == null) return false;
+
+            _context.Metrics.Remove(metric);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
