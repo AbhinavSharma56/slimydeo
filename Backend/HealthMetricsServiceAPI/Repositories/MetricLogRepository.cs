@@ -19,14 +19,14 @@ namespace HealthMetricsServiceAPI.Repositories
         public async Task<MetricsLog?> GetLogByIdAsync(int id) =>
             await _context.MetricsLogs.FindAsync(id);
 
-        public async Task<IEnumerable<MetricsLog>> GetLogsByUserIdAsync(int userId) =>
-            await _context.MetricsLogs.Where(log => log.UserId == userId).ToListAsync();
+        public async Task<IEnumerable<MetricsLog>> GetLogsByUsernameAsync(string username) =>
+            await _context.MetricsLogs.Where(log => log.Username.Equals(username)).ToListAsync();
 
-        public async Task<IEnumerable<MetricsLog>> GetLogsForPast7DaysAsync(int userId)
+        public async Task<IEnumerable<MetricsLog>> GetLogsForPast7DaysAsync(string username)
         {
             DateTime sevenDaysAgo = DateTime.Now.AddDays(-7);
             return await _context.MetricsLogs
-                                 .Where(log => log.UserId == userId && log.DateRecorded >= sevenDaysAgo)
+                                 .Where(log => log.Username.Equals(username) && log.DateRecorded >= sevenDaysAgo)
                                  .ToListAsync();
         }
 
@@ -51,10 +51,10 @@ namespace HealthMetricsServiceAPI.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<MetricsLog>> GetLast7EntriesAsync(int userId, int metricId)
+        public async Task<IEnumerable<MetricsLog>> GetLast7EntriesAsync(string username, int metricId)
         {
             return await _context.MetricsLogs
-                .Where(log => log.UserId == userId && log.MetricId == metricId)
+                .Where(log => log.Username.Equals(username) && log.MetricId == metricId)
                 .OrderByDescending(log => log.DateRecorded)
                 .Take(7)
                 .ToListAsync();

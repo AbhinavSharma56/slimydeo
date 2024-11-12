@@ -7,7 +7,7 @@ namespace HealthMetricsServiceAPI.Models
         [Key]
         public int LogId { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public string Username { get; set; } = string.Empty;
         [Required]
         public int MetricId { get; set; }  // Foreign key to the Metric model
         [Required]

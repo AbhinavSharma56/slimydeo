@@ -50,14 +50,14 @@ namespace HealthMetricsServiceAPI.Controllers
             return success ? NoContent() : StatusCode(500, "Could not delete metric.");
         }
 
-        [HttpGet("metrics/logs/{userId}")]
-        public async Task<IActionResult> GetMetricsLogsByUserId(int userId) =>
-            Ok(await _metricLogRepository.GetLogsByUserIdAsync(userId));
+        [HttpGet("metrics/logs/{username}")]
+        public async Task<IActionResult> GetMetricsLogsByUserId(string username) =>
+            Ok(await _metricLogRepository.GetLogsByUsernameAsync(username));
 
-        [HttpGet("metrics/logs/7days/{userId}")]
-        public async Task<IActionResult> GetMetricsLogsForPast7Days(int userId)
+        [HttpGet("metrics/logs/7days/{username}")]
+        public async Task<IActionResult> GetMetricsLogsForPast7Days(string username)
         {
-            var logs = await _metricLogRepository.GetLogsForPast7DaysAsync(userId);
+            var logs = await _metricLogRepository.GetLogsForPast7DaysAsync(username);
             return logs == null || !logs.Any() ? NotFound() : Ok(logs);
         }
 
@@ -94,10 +94,10 @@ namespace HealthMetricsServiceAPI.Controllers
             return success ? NoContent() : StatusCode(500, "Could not delete log.");
         }
 
-        [HttpGet("metrics/logs/last7/{userId}/{metricId}")]
-        public async Task<IActionResult> GetLast7Entries(int userId, int metricId)
+        [HttpGet("metrics/logs/last7/{username}/{metricId}")]
+        public async Task<IActionResult> GetLast7Entries(string username, int metricId)
         {
-            var logs = await _metricLogRepository.GetLast7EntriesAsync(userId, metricId);
+            var logs = await _metricLogRepository.GetLast7EntriesAsync(username, metricId);
             return logs == null || !logs.Any() ? NotFound() : Ok(logs);
         }
     }
