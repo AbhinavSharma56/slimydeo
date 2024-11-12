@@ -1,9 +1,2 @@
-**/.vs/**
-**/.vscode/**
+.vscode/**
 .github/**
-
-**/bin/**
-**/obj/Debug/**
-**/obj/**
-
-**/Migrations/**
