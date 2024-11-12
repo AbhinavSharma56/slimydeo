@@ -27,12 +27,12 @@
               }
             ],
             "styles": [
-              "node_modules/dist/css/boottrap.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/dist/js/boottrap.js"
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
