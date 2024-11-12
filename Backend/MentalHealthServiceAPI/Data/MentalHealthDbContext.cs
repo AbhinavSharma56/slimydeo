@@ -19,7 +19,7 @@ namespace MentalHealthServiceAPI.Data
                 modelBuilder.Entity<MentalHealthLog>(entity =>
                 {
                     entity.HasKey(e => e.LogId);  // Set primary key
-                    entity.Property(e => e.UserId).IsRequired();
+                    entity.Property(e => e.Username).IsRequired();
                     entity.Property(e => e.MoodId).IsRequired();
                     entity.Property(e => e.Intensity).IsRequired();
                     entity.Property(e => e.Notes).HasMaxLength(500);  // Optional length restriction

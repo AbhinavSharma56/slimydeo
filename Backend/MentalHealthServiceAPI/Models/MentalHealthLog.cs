@@ -7,7 +7,7 @@ namespace MentalHealthServiceAPI.Models
         [Key]
         public int LogId { get; set; }
         [Key]
-        public int UserId { get; set; }
+        public string Username { get; set; }
         [Key]
         public int MoodId { get; set; }
         [Required]

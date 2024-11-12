@@ -6,7 +6,7 @@ namespace ExerciseServiceAPI.Models
     {
         [Key]
         public int LogId { get; set; }
-        public int UserId { get; set; }
+        public string Username { get; set; } = string.Empty;
         public int ExerciseTypeId { get; set; }
         public TimeSpan Duration { get; set; }
         public int CaloriesBurned { get; set; }

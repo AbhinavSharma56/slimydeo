@@ -65,7 +65,7 @@ namespace ExerciseServiceAPI.Controllers
             }
 
             // Update the existing log's fields
-            existingExerciseLog.UserId = exerciseLog.UserId;
+            existingExerciseLog.Username = exerciseLog.Username;
             existingExerciseLog.ExerciseTypeId = exerciseLog.ExerciseTypeId;
             existingExerciseLog.Duration = exerciseLog.Duration;
             existingExerciseLog.CaloriesBurned = exerciseLog.CaloriesBurned;

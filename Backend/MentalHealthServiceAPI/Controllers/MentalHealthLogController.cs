@@ -65,7 +65,7 @@ namespace MentalHealthServiceAPI.Controllers
             }
 
             // Update the existing log's fields
-            existingMentalLog.UserId = mentalHealthLog.UserId;
+            existingMentalLog.Username = mentalHealthLog.Username;
             existingMentalLog.MoodId = mentalHealthLog.MoodId;
             existingMentalLog.Intensity = mentalHealthLog.Intensity;
             existingMentalLog.Notes = mentalHealthLog.Notes;

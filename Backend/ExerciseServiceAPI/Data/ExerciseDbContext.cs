@@ -15,7 +15,7 @@ namespace ExerciseServiceAPI.Data
             modelBuilder.Entity<ExerciseLog>(entity =>
             {
                 entity.HasKey(e => e.LogId);
-                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.Username).IsRequired();
                 entity.Property(e => e.ExerciseTypeId).IsRequired();
                 entity.Property(e => e.Duration).IsRequired();
                 entity.Property(e => e.CaloriesBurned).IsRequired();
