@@ -1,19 +1,24 @@
 ﻿using ExerciseServiceAPI.Models;
 using ExerciseServiceAPI.Repository;
+using ExerciseServiceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ExerciseServiceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/ExerciseLog")]
     [ApiController]
     public class ExerciseLogController : ControllerBase
     {
         private readonly IExerciseLogRepository _exerciseLogRepository;
+        private readonly IExerciseTypeRepository _exerciseTypeRepository;
+        private readonly IExerciseService _exerciseService;
 
-        public ExerciseLogController(IExerciseLogRepository exerciseLogRepository)
+        public ExerciseLogController(IExerciseLogRepository exerciseLogRepository, IExerciseTypeRepository exerciseTypeRepository, IExerciseService exerciseService)
         {
             _exerciseLogRepository = exerciseLogRepository;
+            _exerciseTypeRepository = exerciseTypeRepository;
+            _exerciseService = exerciseService;
         }
 
         // GET: api/exerciselogs
@@ -45,6 +50,22 @@ namespace ExerciseServiceAPI.Controllers
                 return BadRequest("Exercise Log is null.");
             }
 
+            // Get exercise name by ID
+            var exerciseName = await _exerciseTypeRepository.GetExerciseNameByIdAsync(exerciseLog.ExerciseTypeId);
+            if (exerciseName == null)
+            {
+                return BadRequest("Invalid Exercise Type ID.");
+            }
+
+            // Calculate calories burned using exercise name and duration
+            var caloriesBurned = await _exerciseService.CalculateCaloriesBurnedAsync(exerciseName, exerciseLog.Duration);
+
+            if (!caloriesBurned.HasValue)
+                return BadRequest("Unable to calculate calories burned.");
+
+            exerciseLog.CaloriesBurned = caloriesBurned.Value;
+
+            // Insert exercise log
             await _exerciseLogRepository.InsertExerciseLogAsync(exerciseLog);
             return CreatedAtAction(nameof(Get), new { id = exerciseLog.LogId }, exerciseLog);
         }
@@ -87,6 +108,20 @@ namespace ExerciseServiceAPI.Controllers
 
             await _exerciseLogRepository.DeleteExerciseLogAsync(id);
             return Ok("Exercise Log deleted successfully.");
+        }
+
+        // GET: api/exerciselog/total-calories/{userId}/7days
+        [HttpGet("total-calories/{username}/7days")]
+        public async Task<IActionResult> GetTotalCaloriesBurnedPerDay(string username)
+        {
+            var (success, message, data) = await _exerciseService.GetTotalCaloriesBurnedPerDayAsync(username);
+
+            if (!success)
+            {
+                return NotFound(new { success, message });
+            }
+
+            return Ok(new { success, message, data });
         }
     }
 }

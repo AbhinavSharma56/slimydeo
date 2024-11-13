@@ -46,5 +46,12 @@ namespace ExerciseServiceAPI.Repository
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<string?> GetExerciseNameByIdAsync(int exerciseTypeId)
+        {
+            var exerciseType = await _context.ExerciseTypes
+                .FirstOrDefaultAsync(e => e.ExerciseTypeId == exerciseTypeId);
+            return exerciseType?.ExerciseName;
+        }
     }
 }

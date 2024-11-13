@@ -11,5 +11,6 @@ namespace ExerciseServiceAPI.Repository
         Task InsertExerciseLogAsync(ExerciseLog exerciseLog);
         Task UpdateExerciseLogAsync(ExerciseLog exerciseLog);
         Task DeleteExerciseLogAsync(int logId);
+        Task<IEnumerable<ExerciseLog>> GetLogsForPast7DaysAsync(string userName);
     }
 }

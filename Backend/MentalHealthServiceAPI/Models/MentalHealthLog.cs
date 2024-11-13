@@ -6,13 +6,12 @@ namespace MentalHealthServiceAPI.Models
     {
         [Key]
         public int LogId { get; set; }
-        [Key]
-        public string Username { get; set; }
-        [Key]
+        [Required]
+        public string Username { get; set; } = string.Empty;
+        [Required]
         public int MoodId { get; set; }
         [Required]
         public int Intensity{ get; set; }
-        [Required]
         public string Notes { get; set; }
         [Required]
         public DateTime LogDate { get; set; }

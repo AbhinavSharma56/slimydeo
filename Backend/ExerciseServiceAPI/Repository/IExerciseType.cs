@@ -11,5 +11,6 @@ namespace ExerciseServiceAPI.Repository
         Task InsertExerciseTypeAsync(ExerciseType exerciseType);
         Task UpdateExerciseTypeAsync(ExerciseType exerciseType);
         Task DeleteExerciseTypeAsync(int exerciseTypeId);
+        Task<string?> GetExerciseNameByIdAsync(int exerciseTypeId);
     }
 }

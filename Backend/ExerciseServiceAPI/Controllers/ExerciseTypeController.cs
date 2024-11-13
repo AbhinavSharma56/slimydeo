@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ExerciseServiceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/ExerciseType")]
     [ApiController]
     public class ExerciseTypeController : ControllerBase
     {
@@ -86,6 +86,17 @@ namespace ExerciseServiceAPI.Controllers
 
             await _exerciseTypeRepository.DeleteExerciseTypeAsync(id);
             return Ok("Exercise Type deleted successfully.");
+        }
+
+        // GET: api/exercisetype/name/{exerciseTypeId}
+        [HttpGet("name/{exerciseTypeId}")]
+        public async Task<IActionResult> GetExerciseName(int exerciseTypeId)
+        {
+            var exerciseName = await _exerciseTypeRepository.GetExerciseNameByIdAsync(exerciseTypeId);
+            if (exerciseName == null)
+                return NotFound("Exercise type not found.");
+
+            return Ok(new { ExerciseName = exerciseName });
         }
     }
 }

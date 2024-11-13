@@ -46,5 +46,13 @@ namespace ExerciseServiceAPI.Repository
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<ExerciseLog>> GetLogsForPast7DaysAsync(string userName)
+        {
+            var sevenDaysAgo = DateTime.UtcNow.AddDays(-7);
+            return await _context.ExerciseLogs
+                .Where(log => log.Username == userName && log.ExerciseDate >= sevenDaysAgo)
+                .ToListAsync();
+        }
     }
 }
