@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using UserServiceAPI.Data;
+using UserServiceAPI.Repository;
+
 namespace UserServiceAPI
 {
     public class Program
@@ -8,6 +12,8 @@ namespace UserServiceAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            builder.Services.AddDbContext<UserDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("UserServiceDB")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
