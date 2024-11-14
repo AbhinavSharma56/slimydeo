@@ -1,28 +1,33 @@
-﻿using DietServiceAPI.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using DietServiceAPI.Models;
 
 namespace DietServiceAPI.Data
 {
     public class DietDbContext : DbContext
     {
-        public DietDbContext(DbContextOptions<DietDbContext> options) : base(options) { }
+        public DietDbContext(DbContextOptions<DietDbContext> options) : base(options)
+        {
+        }
 
-        public DbSet<Diet> Diets { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodDetails> FoodDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Diet>(entity =>
-            {
-                entity.HasKey(e => e.DietId);  // Set primary key
-                entity.Property(e => e.Username).IsRequired();  // User associated with the diet entry
-                entity.Property(e => e.FoodItem).IsRequired().HasMaxLength(100);  // Name of food item
-                entity.Property(e => e.Quantity).IsRequired();  // Quantity of food consumed
-                entity.Property(e => e.Calories).IsRequired();  // Calories in the food item
-                entity.Property(e => e.MealType).IsRequired().HasMaxLength(50);  // Type of meal (breakfast, lunch, dinner)
-                entity.Property(e => e.ConsumptionDate).IsRequired();  // Date of consumption
+            // Define relationships using Fluent API without navigation properties
 
-                // Define relationships if needed (e.g., User or other entities)
-                // You can add any additional relationship logic here
-            });
+            modelBuilder.Entity<Food>()
+                .HasOne<Meal>() // Meal-Food one-to-many relationship
+                .WithMany()
+                .HasForeignKey(f => f.MealId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodDetails>()
+                .HasOne<Food>() // Food-FoodDetails one-to-one relationship
+                .WithOne()
+                .HasForeignKey<FoodDetails>(fd => fd.FoodId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
