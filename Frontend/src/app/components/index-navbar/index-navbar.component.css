@@ -1,0 +1,26 @@
+header {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between ; */
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+}
+
+header .logo img {
+  height: 50px;
+  width: 50px;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #003366;
+  font-weight: bold;
+  margin: 0 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+header nav a:hover {
+  color: #008152;
+}

@@ -9,3 +9,4 @@ For Angular application, install these dependencies using npm:
   * @angular/animations
   * ngx-toastr
   * bootstrap
+  * @fontsource/montserrat

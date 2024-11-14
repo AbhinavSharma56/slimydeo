@@ -1,0 +1,67 @@
+main {
+  text-align: center;
+  position: relative;
+}
+.content h1 {
+  font-size: 3em;
+  color: #003366;
+  font-weight: bold;
+}
+
+.content h1 span {
+  display: block;
+  font-size: 1.2em;
+  color: #333333;
+  margin-top: -10px;
+}
+
+.content p {
+  font-size: 1.1em;
+  color: #003366;
+  margin-top: 20px;
+}
+
+.down-arrow {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #003366;
+}
+
+.illustrations {
+  position: relative;
+}
+
+.meditation {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+}
+
+.exercisediet {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  width: 120px;
+}
+
+/* .tennis {
+    position: absolute;
+    left: 80px;
+    top: 50px;
+    width: 80px;
+  }
+  
+  .bird {
+    position: absolute;
+    right: 120px;
+    top: 50px;
+    width: 60px;
+  }
+  
+  .yoga {
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    width: 80px;
+  } */
