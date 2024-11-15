@@ -32,7 +32,7 @@ namespace ExerciseServiceAPI
             builder.Services.AddDbContext<ExerciseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ExerciseDB")));
 
             var app = builder.Build();
-
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

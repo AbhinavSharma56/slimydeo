@@ -24,12 +24,18 @@ namespace MentalHealthServiceAPI
 
             var app = builder.Build();
 
+            // Use CORS middleware
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            // Apply CORS policy
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            
 
             app.UseHttpsRedirection();
 
