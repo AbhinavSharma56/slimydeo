@@ -1,157 +1,177 @@
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 shadow" style="width: 400px">
-    <div class="card-header text-center">
-      <h2>Register User</h2>
+<div class="container mt-5 mb-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="card shadow p-4">
+        <div class="card-header text-center">
+          <h2>Register User</h2>
+        </div>
+        <div class="card-body">
+          <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <div class="form-group mb-3">
+              <label for="fullName">Full Name:</label>
+              <input
+                type="text"
+                [(ngModel)]="registerDetailsObj.fullName"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                [(ngModel)]="registerObj.password"
+                class="form-control"
+                id="password"
+                name="password"
+                (blur)="validatePassword()"
+              />
+              <div *ngIf="passwordError" class="text-danger mt-2">
+                <small>{{ passwordError }}</small>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirmPassword">Confirm Password:</label>
+              <input
+                type="password"
+                [(ngModel)]="confirmPassword"
+                class="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                (input)="checkPasswordsMatch()"
+                
+              />
+              <div
+                *ngIf="!passwordsMatch && confirmPassword"
+                class="text-danger mt-2"
+              >
+                <small>Passwords do not match.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="email">Email ID:</label>
+              <input
+                type="email"
+                [(ngModel)]="registerObj.email"
+                (ngModelChange)="onEmailChange($event)"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+                email
+                #email="ngModel"
+              />
+              <div
+                *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="text-danger mt-2"
+              >
+                <small *ngIf="email.errors"
+                  >Please enter a valid email address.</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="role">Role:</label>
+              <select
+                [(ngModel)]="registerObj.role"
+                class="form-control"
+                id="role"
+                name="role"
+                required
+              >
+                <option value="ADMIN">Admin</option>
+                <option value="USER">User</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <label for="dob">Date of Birth:</label>
+              <input
+                type="date"
+                [(ngModel)]="registerDetailsObj.dob"
+                class="form-control datepicker"
+                id="dob"
+                name="dob"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="mobileNumber">Mobile Number:</label>
+              <input
+                type="tel"
+                [(ngModel)]="registerDetailsObj.mobileNumber"
+                class="form-control"
+                id="mobileNumber"
+                name="mobileNumber"
+                required
+                maxlength="10"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="Gender">Gender:</label>
+              <select
+                [(ngModel)]="registerDetailsObj.gender"
+                class="form-control"
+                id="gender"
+                name="gender"
+                required
+              >
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <label for="address">Address:</label>
+              <input
+                type="text"
+                [(ngModel)]="registerDetailsObj.address"
+                class="form-control"
+                id="address"
+                name="address"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="profilePicture">Profile Picture:</label>
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                class="form-control"
+                id="profilePicture"
+                name="profilePicture"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="weight">Weight:</label>
+              <input
+                type="number"
+                [(ngModel)]="registerDetailsObj.weight"
+                class="form-control"
+                id="weight"
+                name="weight"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="height">Height:</label>
+              <input
+                type="number"
+                [(ngModel)]="registerDetailsObj.height"
+                class="form-control"
+                id="height"
+                name="height"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="password">Password:</label>
-          <input
-            type="password"
-            [(ngModel)]="registerObj.password"
-            class="form-control"
-            id="password"
-            name="password"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="email">Email ID:</label>
-          <input
-            type="email"
-            [(ngModel)]="registerObj.email"
-            (ngModelChange)="onEmailChange($event)"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="role">Role:</label>
-          <select
-            [(ngModel)]="registerObj.role"
-            class="form-control"
-            id="role"
-            name="role"
-            required
-          >
-            <option value="ADMIN">Admin</option>
-            <option value="USER">User</option>
-          </select>
-        </div>
-      email: '',
-      mobileNumber: 0,
-      gender: '',
-      address: '',
-      profilePicture: '',
-      createdAt: this.getCurrentLocalDateTime(), // Set to local time,
-      weight: 0,
-      height: 0
-        <div class="form-group mb-3">
-          <label for="dob">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="dob"
-            name="dob"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="fullName">User:</label>
-          <input
-            type="text"
-            [(ngModel)]="registerObj.fullName"
-            class="form-control"
-            id="fullName"
-            name="fullName"
-            required
-          />
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
-      </form>
-    </div>
+    <div aria-live="polite" toastContainer></div>
   </div>
 </div>
-<div aria-live="polite" toastContainer></div>

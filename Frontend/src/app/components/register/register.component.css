@@ -29,3 +29,19 @@
   background-color: #008152; /* Darker shade on hover */
   border-color: #333; /* Darker border on hover */
 }
+
+/* Custom styling for date picker */
+.datepicker {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.datepicker:focus {
+  border-color: #003276;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem #003276;
+}

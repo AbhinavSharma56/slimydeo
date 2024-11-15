@@ -1,56 +1,49 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
-export class LoginComponent {
-  studentObj: any = {
-    "studentId": 0,
-    "studentName": "",
-    "studentGrade": "",
-    "studentRollNo": "",
-    "isActive": true,
-    "createdDate": this.getCurrentLocalDateTime(), // Set to local time
-    "modifiedDate": this.getCurrentLocalDateTime() // Set to local time
+export class LoginComponent implements OnInit {
+  constructor(
+    private authService: AuthService,
+    private toastrService: ToastrService
+  ) {}
+
+  @ViewChild(ToastContainerDirective, { static: true })
+  toastContainer!: ToastContainerDirective;
+
+  ngOnInit() {
+    this.toastrService.overlayContainer = this.toastContainer;
   }
 
-  getCurrentLocalDateTime(): string {
-    const now = new Date();
-    const offsetMs = now.getTimezoneOffset() * 60 * 1000;
-    const localDateTime = new Date(now.getTime() - offsetMs).toISOString().slice(0, 16);
-    return localDateTime;
-  }
+  loginObj: any = {
+    userName: '',
+    password: '',
+  };
 
-  http = inject(HttpClient);
   onSubmit(form: NgForm) {
     debugger;
-    this.http.post(
-      "https://localhost:7088/api/TblStudents",
-      this.studentObj
-    ).subscribe(
+    this.authService.loginUser(this.loginObj).subscribe(
       (res: any) => {
-        if (res.studentId >= 0) {
-          alert("Student Record Created!");
-
-          // Reset the form to its initial state
-          form.resetForm({
-            studentId: 0,
-            studentName: '',
-            studentGrade: '',
-            studentRollNo: '',
-            isActive: true,
-            createdDate: this.getCurrentLocalDateTime(),
-            modifiedDate: this.getCurrentLocalDateTime()
-          });
+        if (res) {
+          this.toastrService.success('Logged in successfully !!', 'Success');
         } else {
-          alert("There was an error while creating the student record.");
+          alert('There was an error while loggin in. Please try again !');
         }
+      },
+      (error) => {
+        this.toastrService.error(
+          'An error occurred: ' + error.message,
+          'Error'
+        );
       }
     );
   }

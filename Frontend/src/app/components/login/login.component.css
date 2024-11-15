@@ -1,30 +1,31 @@
 .card {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-  
+  max-width: 100%;
+  border-radius: 8px;
+}
+
 .card-header {
-    background-color: #000; 
-    color: #fff;            
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  background-color: #003276;
+  color: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
-  
-.form-check-input:checked {
-    background-color: #000; 
-    border-color: #000;     
-  }
-  
+
+/* .form-check-input:checked {
+      background-color: #003276; 
+      border-color: #000;     
+    } */
+
 .form-check-input:checked:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25); /* Focus effect */
+  box-shadow: 0 0 0 0.2rem #008152; /* Focus effect */
 }
-  
+
 .btn-primary {
-    background-color: #000; /* Black background for button */
-    border-color: #000;     /* Black border for button */
+  background-color: #003276; /* Black background for button */
+  border-color: #000; /* Black border for button */
+  font-weight: bold;
 }
-  
+
 .btn-primary:hover {
-    background-color: #333; /* Darker shade on hover */
-    border-color: #333;     /* Darker border on hover */
+  background-color: #008152; /* Darker shade on hover */
+  border-color: #333; /* Darker border on hover */
 }
