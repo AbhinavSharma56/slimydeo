@@ -22,7 +22,7 @@ namespace UserServiceAPI.Models
 
         [Required]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Mobile number must be 10 digits")]
-        public int MobileNumber { get; set; }
+        public long MobileNumber { get; set; }
 
         [Required]
         public string Gender { get; set; } = "Prefer not to say";
