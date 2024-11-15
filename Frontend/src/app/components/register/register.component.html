@@ -1,1 +1,157 @@
-<p>register works!</p>
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow" style="width: 400px">
+    <div class="card-header text-center">
+      <h2>Register User</h2>
+    </div>
+    <div class="card-body">
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            [(ngModel)]="registerObj.password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="email">Email ID:</label>
+          <input
+            type="email"
+            [(ngModel)]="registerObj.email"
+            (ngModelChange)="onEmailChange($event)"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="role">Role:</label>
+          <select
+            [(ngModel)]="registerObj.role"
+            class="form-control"
+            id="role"
+            name="role"
+            required
+          >
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+          </select>
+        </div>
+      email: '',
+      mobileNumber: 0,
+      gender: '',
+      address: '',
+      profilePicture: '',
+      createdAt: this.getCurrentLocalDateTime(), // Set to local time,
+      weight: 0,
+      height: 0
+        <div class="form-group mb-3">
+          <label for="dob">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="dob"
+            name="dob"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="fullName">User:</label>
+          <input
+            type="text"
+            [(ngModel)]="registerObj.fullName"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div aria-live="polite" toastContainer></div>

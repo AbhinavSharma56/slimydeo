@@ -1,11 +1,47 @@
-main {
-  text-align: center;
-  position: relative;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #003366;
+  display: flex;
+  flex-direction: column;
+  min-height: 200vh;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  margin: none;
+  background-image: url("/img/bg.jpg"); /* Replace with the actual image path */
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling of the image */
+}
+
+main.home-main {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+}
+
 .content h1 {
   font-size: 3em;
   color: #003366;
   font-weight: bold;
+  height: 100%;
 }
 
 .content h1 span {
@@ -25,43 +61,39 @@ main {
   font-size: 2em;
   margin-top: 20px;
   color: #003366;
+  cursor: pointer;
 }
 
 .illustrations {
   position: relative;
+  width: 100%;
+  max-width: 1200px;
 }
 
-.meditation {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 300px;
+.about-container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: 100%;
+}
+.about-section {
+  position: relative;
+  padding: 50px;
+  text-align: center;
+  background-color: #f4f4f4;
+  width: 100%;
+  /* Pushes the about section to always be at the bottom */
+  margin-top: auto;
 }
 
-.exercisediet {
-  position: absolute;
-  left: 0;
-  top: 100px;
-  width: 120px;
+.about-section h2 {
+  font-size: 2em;
+  color: #003366;
 }
 
-/* .tennis {
-    position: absolute;
-    left: 80px;
-    top: 50px;
-    width: 80px;
-  }
-  
-  .bird {
-    position: absolute;
-    right: 120px;
-    top: 50px;
-    width: 60px;
-  }
-  
-  .yoga {
-    position: absolute;
-    left: 20px;
-    bottom: 0;
-    width: 80px;
-  } */
+.about-section p {
+  font-size: 1.1em;
+  color: #666666;
+  margin-top: 10px;
+}
