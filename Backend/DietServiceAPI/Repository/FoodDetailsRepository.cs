@@ -16,8 +16,17 @@ namespace DietServiceAPI.Repository
 
         public async Task AddFoodDetailsAsync(FoodDetails foodDetails)
         {
-            await _context.FoodDetails.AddAsync(foodDetails);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.FoodDetails.AddAsync(foodDetails);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (implement proper logging here)
+                Console.Error.WriteLine($"Error in AddFoodDetailsAsync: {ex.Message}");
+                throw new Exception("Database operation failed while adding food details.");
+            }
         }
 
         public async Task<bool> DeleteFoodDetailsAsync(int foodId)
@@ -41,5 +50,24 @@ namespace DietServiceAPI.Repository
             }
             return new ApiResponse<FoodDetails>(false, "Food details not found.");
         }
+
+        public async Task<List<FoodDetails>> GetFoodDetailsByFoodIds(List<int> foodIds)
+        {
+            try
+            {
+                var foodDetails = await _context.FoodDetails
+                    .Where(fd => foodIds.Contains(fd.FoodId))
+                    .ToListAsync();
+
+                return foodDetails;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetFoodDetailsByFoodIds: {ex.Message}");
+                throw new Exception("Failed to retrieve food details for the provided food IDs.");
+            }
+        }
+
     }
 }

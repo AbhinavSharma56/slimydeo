@@ -130,6 +130,8 @@ export class RegisterComponent implements OnInit {
 
     if (!role) {
       this.roleError = 'Role is required.';
+    } else if (role !== 'ADMIN' && role !== 'USER') {
+      this.roleError = 'Invalid role. Role must be either ADMIN or USER.';
     } else {
       this.roleError = ''; // Reset the error if valid
     }

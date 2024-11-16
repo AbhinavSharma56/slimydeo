@@ -51,5 +51,54 @@ namespace DietServiceAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpPost("add-food-details-bulk")]
+        public async Task<IActionResult> AddMultipleFoodDetails([FromBody] List<FoodDetailsRequestDTO> foodDetailsRequests)
+        {
+            try
+            {
+                var result = await _foodDetailsService.AddMultipleFoodDetails(foodDetailsRequests);
+
+                if (result.Success)
+                {
+                    return Ok(new ApiResponse<bool>(true, "Food details added successfully.", true));
+                }
+                return BadRequest(new ApiResponse<bool>(false, result.Message));
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (implement proper logging here)
+                Console.Error.WriteLine($"Error in AddMultipleFoodDetails: {ex.Message}");
+                return StatusCode(500, new ApiResponse<bool>(false, "An internal server error occurred."));
+            }
+        }
+
+        [HttpPost("food-details-by-food-ids")]
+        public async Task<IActionResult> GetFoodDetailsByFoodIds([FromBody] List<int> foodIds)
+        {
+            try
+            {
+                if (foodIds == null || !foodIds.Any())
+                {
+                    return BadRequest(new ApiResponse<List<FoodDetails>>(false, "Food IDs cannot be null or empty."));
+                }
+
+                var foodDetails = await _foodDetailsRepository.GetFoodDetailsByFoodIds(foodIds);
+
+                if (foodDetails == null || !foodDetails.Any())
+                {
+                    return NotFound(new ApiResponse<List<FoodDetails>>(false, "No food details found for the provided food IDs."));
+                }
+
+                return Ok(new ApiResponse<List<FoodDetails>>(true, "Food details retrieved successfully.", foodDetails));
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetFoodDetailsByFoodIds: {ex.Message}");
+                return StatusCode(500, new ApiResponse<List<FoodDetails>>(false, "An internal server error occurred."));
+            }
+        }
+
+
     }
 }

@@ -39,6 +39,18 @@ namespace DietServiceAPI.Controllers
             return Ok(response); // Return success response
         }
 
+        // GET: api/meal/user/{userName}
+        [HttpGet("user/{userName}")]
+        public async Task<ActionResult<ApiResponse<Meal>>> GetMealByUser(string userName)
+        {
+            var response = await _mealRepository.GetMealsByUserAsync(userName);
+            if (!response.Success)
+            {
+                return NotFound(response); // Return failure if meal not found
+            }
+            return Ok(response); // Return success response
+        }
+
         // POST: api/meal
         [HttpPost]
         public async Task<ActionResult<ApiResponse<Meal>>> CreateMeal(Meal meal)
@@ -75,5 +87,26 @@ namespace DietServiceAPI.Controllers
             }
             return Ok(response); // Return success response
         }
+
+        [HttpGet("user-meals")]
+        public async Task<IActionResult> GetMealsForUserByDate(string username, DateTime date)
+        {
+            try
+            {
+                var meals = await _mealRepository.GetMealsForUserByDate(username, date);
+                if (meals == null || !meals.Any())
+                {
+                    return NotFound(new ApiResponse<List<Meal>>(false, "No meals found for the specified user and date."));
+                }
+                return Ok(new ApiResponse<List<Meal>>(true, "Meals retrieved successfully.", meals));
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetMealsForUserByDate: {ex.Message}");
+                return StatusCode(500, new ApiResponse<List<Meal>>(false, "An internal server error occurred."));
+            }
+        }
+
     }
 }

@@ -7,5 +7,6 @@ namespace DietServiceAPI.Repository
         Task AddFoodDetailsAsync(FoodDetails foodDetails);
         Task<bool> DeleteFoodDetailsAsync(int foodId);
         Task<ApiResponse<FoodDetails>> GetFoodDetailsByIdAsync(int foodId);
+        Task<List<FoodDetails>> GetFoodDetailsByFoodIds(List<int> foodIds);
     }
 }

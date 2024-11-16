@@ -68,14 +68,60 @@ namespace DietServiceAPI.Repository
 
         public async Task<ApiResponse<IEnumerable<Food>>> GetFoodsByMealIdAsync(int mealId)
         {
-            var foods = await _context.Foods
-                                       .Where(f => f.MealId == mealId)
-                                       .ToListAsync();
-            if (foods == null || foods.Count == 0)
+            try
             {
-                return new ApiResponse<IEnumerable<Food>>(false, "No foods found for the specified MealId");
+                var foods = await _context.Foods
+                                          .Where(f => f.MealId == mealId)
+                                          .ToListAsync();
+
+                if (foods.Any())
+                {
+                    return new ApiResponse<IEnumerable<Food>>(true, "Foods retrieved successfully", foods);
+                }
+
+                return new ApiResponse<IEnumerable<Food>>(false, "No foods found for the given MealId");
             }
-            return new ApiResponse<IEnumerable<Food>>(true, "Foods retrieved successfully", foods);
+            catch (Exception ex)
+            {
+                return new ApiResponse<IEnumerable<Food>>(false, $"An error occurred: {ex.Message}");
+            }
         }
+
+        public async Task<ApiResponse<List<Food>>> AddMultipleFoodsAsync(List<Food> foods)
+        {
+            try
+            {
+                foreach (var food in foods)
+                {
+                    _context.Foods.Add(food); // Add each food item to the context
+                }
+
+                await _context.SaveChangesAsync(); // Save all changes at once
+
+                return new ApiResponse<List<Food>>(true, "Foods added successfully", foods);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<Food>>(false, $"An error occurred: {ex.Message}");
+            }
+        }
+        public async Task<List<Food>> GetFoodsByMealIds(List<int> mealIds)
+        {
+            try
+            {
+                var foods = await _context.Foods
+                    .Where(f => mealIds.Contains(f.MealId))
+                    .ToListAsync();
+
+                return foods;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetFoodsByMealIds: {ex.Message}");
+                throw new Exception("Failed to retrieve food items for the provided meal IDs.");
+            }
+        }
+
     }
 }

@@ -9,5 +9,7 @@ namespace DietServiceAPI.Repository
         Task<ApiResponse<Meal>> AddMealAsync(Meal meal);
         Task<ApiResponse<Meal>> UpdateMealAsync(Meal meal);
         Task<ApiResponse<bool>> DeleteMealAsync(int mealId);
+        Task<ApiResponse<IEnumerable<Meal>>> GetMealsByUserAsync(string userName);
+        Task<List<Meal>> GetMealsForUserByDate(string username, DateTime date);
     }
 }
