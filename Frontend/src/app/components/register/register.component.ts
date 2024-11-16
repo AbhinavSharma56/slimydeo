@@ -5,6 +5,7 @@ import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { saveAs } from 'file-saver';
 import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit {
   confirmPassword: string = '';
   passwordsMatch: boolean = true;
   mobileNumberError: string = '';
+  roleError: string = '';
 
   ngOnInit() {
     this.toastrService.overlayContainer = this.toastContainer;
@@ -66,9 +68,6 @@ export class RegisterComponent implements OnInit {
     if (email) {
       this.validateEmail(email);
     }
-    this.registerObj.userName = email; // Set email as username
-    this.registerDetailsObj.email = email; // Update registerDetailsObj's email
-    this.registerDetailsObj.username = email; // Update registerDetailsObj's username
   }
 
   validateEmail(email: string): void {
@@ -90,6 +89,8 @@ export class RegisterComponent implements OnInit {
 
     if (!password) {
       this.passwordError = 'Password is required.';
+    } else if (password.length < 6) {
+      this.passwordError = 'Password must be at least 6 characters long.';
     } else if (!/[A-Z]/.test(password)) {
       this.passwordError =
         'Password must contain at least one uppercase letter.';
@@ -121,32 +122,66 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onSubmit(form: NgForm): void {
+  validateRole(): void {
+    const role = this.registerObj.role;
+
+    if (!role) {
+      this.roleError = 'Role is required.';
+    } else {
+      this.roleError = ''; // Reset the error if valid
+    }
+  }
+
+  onSubmit(form: NgForm) {
     this.checkPasswordsMatch();
+    this.validateRole();
 
     if (!this.passwordsMatch) {
       this.toastrService.error('Passwords do not match!', 'Error');
       return;
     }
+    if (this.roleError) {
+      this.toastrService.error(this.roleError, 'Validation Error');
+      return;
+    }
+
+    // Set email as username
+    this.registerObj.userName = this.registerObj.email;
+    this.registerDetailsObj.email = this.registerObj.email; // Update registerDetailsObj's email
+    this.registerDetailsObj.username = this.registerObj.userName; // Update registerDetailsObj's username
 
     this.authService.registerUser(this.registerObj).subscribe(
       (res: any) => {
         if (res) {
-          this.toastrService.success('Registered successfully !', 'Success');
-          // Reset the form to its initial state
-          form.resetForm();
+          this.userService.registerUserDetails(this.registerDetailsObj).subscribe(
+            (resobj: any) => {
+              if (resobj) {
+                this.toastrService.success(
+                  'Registered successfully!',
+                  'Success'
+                );
+                form.resetForm();
+              } else {
+                this.toastrService.error(
+                  'There was an error while registering the user.',
+                  'Error'
+                );
+              }
+            },
+          )
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (error.error && error.error.text) {
+          // Display the error text in Toastr
+          this.toastrService.error(error.error.text, 'Error');
         } else {
+          // Handle generic error cases
           this.toastrService.error(
-            'There was an error while registering the user.',
+            'An error occurred: ' + error.message,
             'Error'
           );
         }
-      },
-      (error) => {
-        this.toastrService.error(
-          'An error occurred: ' + error.message,
-          'Error'
-        );
       }
     );
   }

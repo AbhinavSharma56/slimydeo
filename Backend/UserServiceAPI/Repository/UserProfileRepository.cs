@@ -20,9 +20,9 @@ namespace UserServiceAPI.Repository
             return new ApiResponse { Success = true, Message = "User profile created successfully.", Data = userProfile };
         }
 
-        public async Task<UserProfile?> GetUserProfileByIdAsync(int userProfileId)
+        public async Task<UserProfile?> GetUserProfileByUsernameAsync(string userName)
         {
-            return await _context.UserProfiles.FindAsync(userProfileId);
+            return await _context.UserProfiles.FirstOrDefaultAsync(x => x.Username==userName);
         }
 
         public async Task<IEnumerable<UserProfile>> GetAllUsersAsync()
@@ -30,9 +30,9 @@ namespace UserServiceAPI.Repository
             return await _context.UserProfiles.ToListAsync();
         }
 
-        public async Task<ApiResponse> UpdateUserProfileAsync(UserProfile userProfile)
+        public async Task<ApiResponse> UpdateUserProfileAsync(string userName, UserProfile userProfile)
         {
-            var existingUserProfile = await _context.UserProfiles.FindAsync(userProfile.UserProfileId);
+            var existingUserProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Username == userName);
             if (existingUserProfile == null)
             {
                 return new ApiResponse { Success = false, Message = "User profile not found." };
@@ -52,9 +52,9 @@ namespace UserServiceAPI.Repository
             return new ApiResponse { Success = true, Message = "User profile updated successfully.", Data = userProfile };
         }
 
-        public async Task<ApiResponse> DeleteUserProfileAsync(int userProfileId)
+        public async Task<ApiResponse> DeleteUserProfileAsync(string userName)
         {
-            var userProfile = await _context.UserProfiles.FindAsync(userProfileId);
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(x => x.Username == userName);
             if (userProfile == null)
             {
                 return new ApiResponse { Success = false, Message = "User profile not found." };

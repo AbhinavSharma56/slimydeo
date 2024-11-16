@@ -41,20 +41,24 @@ namespace AuthServiceAPI.Services
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
 
-
-
             if (isValid)
             {
                 var token = _tokenGenerator.GenerateToken(user);
 
                 return new LoginResponse()
                 {
+                    Success = true,
                     Token = token,
                     Role = user.Role,
                     Username = user.UserName
                 };
             }
-            return new LoginResponse();
+            return new LoginResponse() { 
+                Success = false,
+                Token = "",
+                Role = "",
+                Username = ""
+            };
         }
     }
 }

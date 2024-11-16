@@ -1,6 +1,6 @@
 ﻿using AuthServiceAPI.models;
+using AuthServiceAPI.Models;
 using AuthServiceAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthServiceAPI.Controllers
@@ -21,7 +21,10 @@ namespace AuthServiceAPI.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterRequestDto register)
         {
-            var result = await _registerService.RegisterUser(register);
+            var result = new RegisterResponse()
+            {
+                message = await _registerService.RegisterUser(register)
+            };
             return Ok(result);
         }
 

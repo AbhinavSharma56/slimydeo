@@ -5,9 +5,9 @@ namespace UserServiceAPI.Repository
     public interface IUserProfileRepository
     {
         Task<ApiResponse> AddUserProfileAsync(UserProfile userProfile);
-        Task<UserProfile?> GetUserProfileByIdAsync(int userProfileId);
+        Task<UserProfile?> GetUserProfileByUsernameAsync(string userName);
         Task<IEnumerable<UserProfile>> GetAllUsersAsync();
-        Task<ApiResponse> UpdateUserProfileAsync(UserProfile userProfile);
-        Task<ApiResponse> DeleteUserProfileAsync(int userProfileId);
+        Task<ApiResponse> UpdateUserProfileAsync(string userName, UserProfile userProfile);
+        Task<ApiResponse> DeleteUserProfileAsync(string userName);
     }
 }

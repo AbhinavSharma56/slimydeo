@@ -4,7 +4,7 @@ using UserServiceAPI.Repository;
 
 namespace UserServiceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/UserProfile")]
     [ApiController]
     public class UserProfileController : ControllerBase
     {
@@ -22,10 +22,10 @@ namespace UserServiceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{userProfileId}")]
-        public async Task<IActionResult> GetUserProfileById(int userProfileId)
+        [HttpGet("{userName}")]
+        public async Task<IActionResult> GetUserProfileById(string userName)
         {
-            var userProfile = await _userProfileRepository.GetUserProfileByIdAsync(userProfileId);
+            var userProfile = await _userProfileRepository.GetUserProfileByUsernameAsync(userName);
             return userProfile != null
                 ? Ok(new ApiResponse { Success = true, Message = "User profile retrieved successfully.", Data = userProfile })
                 : NotFound(new ApiResponse { Success = false, Message = "User profile not found." });
@@ -38,17 +38,17 @@ namespace UserServiceAPI.Controllers
             return Ok(new ApiResponse { Success = true, Message = "All users retrieved successfully.", Data = users });
         }
 
-        [HttpPut("UpdateUserProfile")]
-        public async Task<IActionResult> UpdateUserProfile(UserProfile userProfile)
+        [HttpPut("{userName}")]
+        public async Task<IActionResult> UpdateUserProfile(string userName, UserProfile userProfile)
         {
-            var response = await _userProfileRepository.UpdateUserProfileAsync(userProfile);
+            var response = await _userProfileRepository.UpdateUserProfileAsync(userName, userProfile);
             return Ok(response);
         }
 
-        [HttpDelete("{userProfileId}")]
-        public async Task<IActionResult> DeleteUserProfile(int userProfileId)
+        [HttpDelete("{userName}")]
+        public async Task<IActionResult> DeleteUserProfile(string userName)
         {
-            var response = await _userProfileRepository.DeleteUserProfileAsync(userProfileId);
+            var response = await _userProfileRepository.DeleteUserProfileAsync(userName);
             return Ok(response);
         }
     }
