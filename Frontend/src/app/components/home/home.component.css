@@ -4,13 +4,32 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  color: #003366;
+/* Set background for full viewport */
+
+.background {
+  background-image: url("/img/bg.png"); /* Path to your image */
+  background-size: cover; /* Ensures the image covers the screen */
+  background-position: left; /* Center the background */
+  background-repeat: no-repeat; /* Prevents tiling */
+  height: 80vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
   display: flex;
-  flex-direction: column;
-  min-height: 200vh;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .background {
+    background-size: contain; /* Keeps image aspect ratio on smaller screens */
+    background-position: top center;
+  }
+}
+@media (max-width: 480px) {
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
 }
 
 .home-container {
@@ -19,11 +38,6 @@ body {
   align-items: center;
   flex-grow: 1;
   width: 100%;
-  margin: none;
-  background-image: url("/img/bg.jpg"); /* Replace with the actual image path */
-  background-size: cover; /* Ensures the image covers the entire container */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents tiling of the image */
 }
 
 main.home-main {
@@ -37,40 +51,30 @@ main.home-main {
   width: 100%;
 }
 
+.content {
+  position: relative;
+  left: 20%;
+  padding: 50px;
+  text-align: justify;
+  width: 100%;
+}
 .content h1 {
-  font-size: 3em;
-  color: #003366;
-  font-weight: bold;
-  height: 100%;
+  font-size: 3rem;
 }
 
 .content h1 span {
   display: block;
   font-size: 1.2em;
-  color: #333333;
   margin-top: -10px;
 }
 
-.content p {
-  font-size: 1.1em;
-  color: #003366;
-  margin-top: 20px;
-}
-
-.down-arrow {
-  font-size: 2em;
-  margin-top: 20px;
-  color: #003366;
-  cursor: pointer;
-}
-
-.illustrations {
+/* .illustrations {
   position: relative;
   width: 100%;
   max-width: 1200px;
-}
+} */
 
-.about-container {
+/* .about-container {
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -83,7 +87,7 @@ main.home-main {
   text-align: center;
   background-color: #f4f4f4;
   width: 100%;
-  /* Pushes the about section to always be at the bottom */
+  /* Pushes the about section to always be at the bottom
   margin-top: auto;
 }
 
@@ -96,4 +100,38 @@ main.home-main {
   font-size: 1.1em;
   color: #666666;
   margin-top: 10px;
+} */
+
+#wellness {
+  font-family: 'Marykate', cursive;
+  font-weight: bold;
+  font-weight: 700; /* Optional: Set font weight */
+  color: #003366; /* Add color if needed */
+  top: 50%;
+  left: 30%;
+}
+
+#hub {
+  position: relative;
+  left: 4%;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400; /* Optional: Set font weight */
+  color: #003366; /* Add color if needed */
+}
+
+.down-arrow {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #003366;
+  cursor: pointer;
+}
+.bottom-content {
+  font-size: 1.1em;
+  color: #003366;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
