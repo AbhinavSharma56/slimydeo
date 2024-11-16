@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { saveAs } from 'file-saver';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,8 @@ export class RegisterComponent implements OnInit {
     private toastrService: ToastrService,
     private userService: UserService
   ) {}
+
+  router= inject(Router);
 
   @ViewChild(ToastContainerDirective, { static: true })
   toastContainer!: ToastContainerDirective;
@@ -161,6 +164,7 @@ export class RegisterComponent implements OnInit {
                   'Success'
                 );
                 form.resetForm();
+                this.router.navigateByUrl('/login');
               } else {
                 this.toastrService.error(
                   'There was an error while registering the user.',
@@ -168,6 +172,18 @@ export class RegisterComponent implements OnInit {
                 );
               }
             },
+            (error: HttpErrorResponse) => {
+              if (error.error && error.error.text) {
+                // Display the error text in Toastr
+                this.toastrService.error(error.error.text, 'Error');
+              } else {
+                // Handle generic error cases
+                this.toastrService.error(
+                  'An error occurred: ' + error.message,
+                  'Error'
+                );
+              }
+            }
           )
         }
       },

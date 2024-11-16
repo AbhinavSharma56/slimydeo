@@ -106,7 +106,7 @@ main.home-main {
   font-family: 'Marykate', cursive;
   font-weight: bold;
   font-weight: 700; /* Optional: Set font weight */
-  color: #003366; /* Add color if needed */
+  color: #003276; /* Add color if needed */
   top: 50%;
   left: 30%;
 }
@@ -116,18 +116,18 @@ main.home-main {
   left: 4%;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400; /* Optional: Set font weight */
-  color: #003366; /* Add color if needed */
+  color: #003276; /* Add color if needed */
 }
 
 .down-arrow {
   font-size: 2em;
   margin-top: 20px;
-  color: #003366;
+  color: #003276;
   cursor: pointer;
 }
 .bottom-content {
   font-size: 1.1em;
-  color: #003366;
+  color: #003276;
   margin-top: 20px;
   position: absolute;
   bottom: 20px; /* Adjust as needed */

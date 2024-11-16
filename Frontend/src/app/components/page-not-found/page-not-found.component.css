@@ -25,13 +25,13 @@ h2 {
 
 /* Button style */
 .btn-primary {
-  background-color: #007bff; /* Primary color */
-  border-color: #007bff;
+  background-color: #003276; /* Primary color */
+  border-color: #003276;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #008152;
+  border-color: #008152;
 }
 
 #logo {

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
 
+  router = inject(Router);
+
   @ViewChild(ToastContainerDirective, { static: true })
   toastContainer!: ToastContainerDirective;
 
@@ -30,20 +33,39 @@ export class LoginComponent implements OnInit {
   };
 
   onSubmit(form: NgForm) {
-    debugger;
     this.authService.loginUser(this.loginObj).subscribe(
       (res: any) => {
-        if (res) {
-          this.toastrService.success('Logged in successfully !!', 'Success');
+        if (res.success) {
+          // Store the user data in local storage
+          localStorage.setItem('loggedUser', res.username);
+          localStorage.setItem('loggedUserRole', res.role);
+          localStorage.setItem('loggedUserToken', res.token);
+          this.toastrService.success('Logged in successfully!!', 'Success');
+          //Redirect to the dasboard after successful login
+          if (res.role === 'ADMIN') {
+            this.router.navigateByUrl('/admin');
+          } else if (res.role === 'USER') {
+            this.router.navigateByUrl('/user');
+          }
         } else {
-          alert('There was an error while loggin in. Please try again !');
+          this.toastrService.error(
+            'There was an error while logging in. Please try again !!',
+            'Error'
+          );
+          form.reset();
         }
       },
-      (error) => {
-        this.toastrService.error(
-          'An error occurred: ' + error.message,
-          'Error'
-        );
+      (error: HttpErrorResponse) => {
+        if (error.error && error.error.text) {
+          // Display the error text in Toastr
+          this.toastrService.error(error.error.text, 'Error');
+        } else {
+          // Handle generic error cases
+          this.toastrService.error(
+            'An error occurred: ' + error.message,
+            'Error'
+          );
+        }
       }
     );
   }
