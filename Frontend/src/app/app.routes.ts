@@ -6,7 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserNavbarComponent } from './components/user components/user-navbar/user-navbar.component';
 import { authGuard } from './guards/auth.guard';
-import { AdminNavbarComponent } from './components/admin components/admin-dashboard/admin-navbar.component';
+import { AdminNavbarComponent } from './components/admin components/admin-navbar/admin-navbar.component';
 import { loginGuard } from './guards/login.guard';
 import { UserDashboardComponent } from './components/user components/user-dashboard/user-dashboard.component';
 import { ExerciseDashboardComponent } from './components/user components/exercise-dashboard/exercise-dashboard.component';
@@ -18,6 +18,9 @@ import { ListMealComponent } from './components/user components/meal-dashboard/l
 import { AddMealComponent } from './components/user components/meal-dashboard/add-meal/add-meal.component';
 import { UpdateMealComponent } from './components/user components/meal-dashboard/update-meal/update-meal.component';
 import { DeleteMealComponent } from './components/user components/meal-dashboard/delete-meal/delete-meal.component';
+import { ExerciseTypeComponent } from './components/admin components/exercise-type/exercise-type.component';
+import { MoodTypeComponent } from './components/admin components/mood-type/mood-type.component';
+import { UserDataComponent } from './components/admin components/user-data/user-data.component';
 
 export const routes: Routes = [
     { 
@@ -104,6 +107,23 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminNavbarComponent ,
         children: [
+            {
+                path: 'exercise-type',
+                component: ExerciseTypeComponent
+            },
+            {
+                path: 'mood-type',
+                component: MoodTypeComponent
+            },
+            {
+                path: 'user-data',
+                component: UserDataComponent
+            },
+            {
+                path: '',  
+                redirectTo: 'user-data',  
+                pathMatch: 'full'
+            }
         ],
         canActivate: [authGuard]
     },

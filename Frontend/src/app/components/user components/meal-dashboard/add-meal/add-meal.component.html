@@ -1,40 +1,80 @@
 <div class="card form-container">
-  <div class="card-header text-center">Add Student</div>
+  <div class="card-header text-center">Add Meal</div>
   <div class="card-body">
-    <form id="studentForm">
+    <form>
       <div class="form-group mb-3">
-        <label for="studentName">Student Name:</label>
+        <label for="mealType">Meal Type:</label>
+        <select
+          [(ngModel)]="meal.mealType"
+          name="mealType"
+          class="form-control"
+          required
+        >
+          <option *ngFor="let option of mealTypes" [value]="option.value">
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group mb-3">
+        <label for="consumptionDate">Consumption Date:</label>
         <input
-          type="text"
-          [(ngModel)]="student.studentName"
-          name="studentName"
+          type="datetime-local"
+          [(ngModel)]="meal.consumptionDate"
+          name="consumptionDate"
           class="form-control"
           required
         />
       </div>
       <div class="form-group mb-3">
-        <label for="studentGrade">Grade:</label>
+        <label for="foodItemsCount">Number of Food Items:</label>
         <input
-          type="text"
-          [(ngModel)]="student.studentGrade"
-          name="studentGrade"
+          type="number"
+          [(ngModel)]="foodItemsCount"
+          (change)="updateFoodItemsCount()"
+          name="foodItemsCount"
           class="form-control"
-          required
         />
       </div>
-      <div class="form-group mb-3">
-        <label for="studentRollNo">Roll No:</label>
-        <input
-          type="text"
-          [(ngModel)]="student.studentRollNo"
-          name="studentRollNo"
-          class="form-control"
-          required
-        />
+
+      <div *ngFor="let food of foodDetails; let i = index" class="food-item">
+        <h5>Food Item {{ i + 1 }}</h5>
+        <div class="form-group mb-3">
+          <label for="foodName">Food Name:</label>
+          <input
+            type="text"
+            [(ngModel)]="food.foodName"
+            [name]="'foodName' + i"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="quantity">Quantity:</label>
+          <input
+            type="number"
+            [(ngModel)]="food.quantity"
+            [name]="'quantity' + i"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="unit">Unit:</label>
+          <input
+            type="text"
+            [(ngModel)]="food.unit"
+            [name]="'unit' + i"
+            class="form-control"
+            required
+          />
+        </div>
       </div>
+
       <div class="d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-black me-2" (click)="onAdd()">Add</button>
-        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn-black me-2" (click)="addMeal()">
+          Add Meal
+        </button>
       </div>
     </form>
   </div>

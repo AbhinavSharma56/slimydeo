@@ -1,46 +1,75 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { MealService } from '../../../../services/meal.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-meal',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-meal.component.html',
   styleUrls: ['./add-meal.component.css'], // Corrected property name
 })
 export class AddMealComponent {
-  student = { studentName: '', studentGrade: '', studentRollNo: '' };
+  meal = { mealId: 0, username: '', mealType: '', consumptionDate: '' };
+  foodDetails: any[] = [];
+  foodItemsCount = 1;
 
-  @Output() success = new EventEmitter<void>(); // Emits success event to parent
+  // Meal type options
+  mealTypes = [
+    { value: 'BREAKFAST', display: 'Breakfast' },
+    { value: 'SNACK (MORNING)', display: 'Snack (Morning)' },
+    { value: 'LUNCH', display: 'Lunch' },
+    { value: 'SNACK (EVENING)', display: 'Snack (Evening)' },
+    { value: 'DINNER', display: 'Dinner' },
+  ];
 
-  onAdd(): void {
-    // Simulate API call to add student
-    if (this.isFormValid()) {
-      console.log('Student added:', this.student);
-      this.resetForm(); // Clear form fields after adding
-      this.success.emit(); // Notify parent component of success
-    } else {
-      console.error('Form validation failed. Please fill all required fields.');
+  constructor(
+    private mealService: MealService,
+    private toastr: ToastrService
+  ) {}
+
+  updateFoodItemsCount(): void {
+    this.foodDetails = Array(this.foodItemsCount).fill({
+      foodId: 0,
+      foodName: '',
+      quantity: 0,
+      unit: '',
+    });
+  }
+
+  addMeal(): void {
+    if (localStorage.getItem('loggedUser') !== null) {
+      this.meal.username = localStorage.getItem('loggedUser')!;
     }
+    this.mealService.addMeal(this.meal).subscribe({
+      next: (response) => {
+        if (response.success) {
+          const mealId = response.data.mealId;
+          this.addFoodDetails(mealId);
+        }
+      },
+      error: () => this.toastr.error('Failed to add meal.'),
+    });
   }
 
-  onCancel(): void {
-    // Logic to handle cancellation, if needed
-    console.log('Add operation cancelled');
-    this.resetForm();
+  addFoodDetails(mealId: number): void {
+    this.mealService.addFoodDetailsBulk(mealId, this.foodDetails).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.toastr.success('Meal and foods added successfully.');
+          this.resetForm();
+        }
+      },
+      error: () => this.toastr.error('Failed to add food details.'),
+    });
   }
 
-  private isFormValid(): boolean {
-    // Simple form validation logic
-    return (
-      this.student.studentName.trim() !== '' &&
-      this.student.studentGrade.trim() !== '' &&
-      this.student.studentRollNo.trim() !== ''
-    );
-  }
-
-  private resetForm(): void {
-    // Reset the form fields
-    this.student = { studentName: '', studentGrade: '', studentRollNo: '' };
+  resetForm(): void {
+    this.meal = { mealId: 0, username: '', mealType: '', consumptionDate: '' };
+    this.foodDetails = [];
+    this.foodItemsCount = 1;
+    this.updateFoodItemsCount();
   }
 }

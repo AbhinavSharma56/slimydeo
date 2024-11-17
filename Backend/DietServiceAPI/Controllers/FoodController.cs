@@ -90,11 +90,11 @@ namespace DietServiceAPI.Controllers
 
         // POST: api/food/bulk-add
         [HttpPost("bulk-add")]
-        public async Task<ActionResult<ApiResponse<List<Food>>>> AddMultipleFoods(List<Food> foods)
+        public async Task<ActionResult<ApiResponse<List<int>>>> AddMultipleFoods(List<Food> foods)
         {
             if (foods == null || !foods.Any())
             {
-                return BadRequest(new ApiResponse<List<Food>>(false, "Food list cannot be empty."));
+                return BadRequest(new ApiResponse<List<int>>(false, "Food list cannot be empty."));
             }
 
             var response = await _foodRepository.AddMultipleFoodsAsync(foods);
@@ -106,6 +106,7 @@ namespace DietServiceAPI.Controllers
 
             return StatusCode(500, response); // Return a 500 Internal Server Error if something went wrong
         }
+
 
         [HttpPost("foods-by-meal-ids")]
         public async Task<IActionResult> GetFoodsByMealIds([FromBody] List<int> mealIds)

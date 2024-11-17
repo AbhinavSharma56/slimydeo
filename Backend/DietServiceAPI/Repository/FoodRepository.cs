@@ -87,10 +87,12 @@ namespace DietServiceAPI.Repository
             }
         }
 
-        public async Task<ApiResponse<List<Food>>> AddMultipleFoodsAsync(List<Food> foods)
+        public async Task<ApiResponse<List<int>>> AddMultipleFoodsAsync(List<Food> foods)
         {
             try
             {
+                var addedFoodIds = new List<int>();
+
                 foreach (var food in foods)
                 {
                     _context.Foods.Add(food); // Add each food item to the context
@@ -98,13 +100,18 @@ namespace DietServiceAPI.Repository
 
                 await _context.SaveChangesAsync(); // Save all changes at once
 
-                return new ApiResponse<List<Food>>(true, "Foods added successfully", foods);
+                // Retrieve IDs of the newly added food items
+                addedFoodIds = foods.Select(f => f.FoodId).ToList();
+
+                return new ApiResponse<List<int>>(true, "Foods added successfully", addedFoodIds);
             }
             catch (Exception ex)
             {
-                return new ApiResponse<List<Food>>(false, $"An error occurred: {ex.Message}");
+                // Log the exception and return a failure response
+                return new ApiResponse<List<int>>(false, $"An error occurred: {ex.Message}");
             }
         }
+
         public async Task<List<Food>> GetFoodsByMealIds(List<int> mealIds)
         {
             try

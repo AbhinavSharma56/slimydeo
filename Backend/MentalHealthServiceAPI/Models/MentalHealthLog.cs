@@ -12,7 +12,7 @@ namespace MentalHealthServiceAPI.Models
         public int MoodId { get; set; }
         [Required]
         public int Intensity{ get; set; }
-        public string Notes { get; set; }
+        public string Notes { get; set; } = string.Empty;
         [Required]
         public DateTime LogDate { get; set; }
     }

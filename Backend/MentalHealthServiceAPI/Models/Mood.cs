@@ -7,11 +7,11 @@ namespace MentalHealthServiceAPI.Models
         [Key]
         public int MoodId { get; set; }
         [Required]
-        public string MoodName { get; set; }
+        public string MoodName { get; set; } = string.Empty;
        
-        public string Description { get; set; }
-      
-        public int CreatedBy {  get; set; }
+        public string Description { get; set; } = string.Empty;
+
+        public string CreatedBy { get; set; } = string.Empty;
         
         public DateTime CreatedAt { get; set; }
     }

@@ -10,7 +10,7 @@ namespace DietServiceAPI.Repository
         Task<ApiResponse<Food>> UpdateFoodAsync(Food food);
         Task<ApiResponse<bool>> DeleteFoodAsync(int foodId);
         Task<ApiResponse<IEnumerable<Food>>> GetFoodsByMealIdAsync(int mealId);
-        Task<ApiResponse<List<Food>>> AddMultipleFoodsAsync(List<Food> foods);
+        Task<ApiResponse<List<int>>> AddMultipleFoodsAsync(List<Food> foods);
         Task<List<Food>> GetFoodsByMealIds(List<int> mealIds);
     }
 }

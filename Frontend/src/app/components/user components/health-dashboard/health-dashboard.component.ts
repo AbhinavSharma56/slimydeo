@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-health-dashboard',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterOutlet],
+  imports: [FormsModule, CommonModule],
   templateUrl: './health-dashboard.component.html',
   styleUrl: './health-dashboard.component.css'
 })
