@@ -1,1 +1,151 @@
-<p>exercise-dashboard works!</p>
+<router-outlet></router-outlet>
+
+<div class="container mt-4">
+  <div class="row">
+    <!-- Form Section: Left Side -->
+    <div class="col-md-5">
+      <form (ngSubmit)="onSubmit()" #physicalActivityForm="ngForm">
+        <!-- <div class="form-group mb-3">
+           <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="physicalActivityObj.username"
+            name="username"
+            required
+            placeholder="Enter your name"
+          />
+          <div
+            *ngIf="
+              physicalActivityForm.submitted && !physicalActivityObj.username
+            "
+            class="text-danger"
+          >
+            Username is required.
+          </div>
+        </div> -->
+
+        <div class="form-group mb-3">
+          <label for="exerciseTypeId">Exercise Type</label>
+          <select
+            class="form-control"
+            [(ngModel)]="physicalActivityObj.exerciseTypeId"
+            name="exerciseTypeId"
+            required
+          >
+            <option value="" disabled>Select an exercise type</option>
+            <option
+              *ngFor="let exercise of exerciseTypes"
+              [value]="exercise.exerciseTypeId"
+            >
+              {{ exercise.exerciseName }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              physicalActivityForm.submitted &&
+              !physicalActivityObj.exerciseTypeId
+            "
+            class="text-danger"
+          >
+            Please select an exercise type.
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="duration">Duration</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="physicalActivityObj.duration"
+            name="duration"
+            required
+            placeholder="Duration (hh:mm:ss)"
+          />
+          <div
+            *ngIf="
+              physicalActivityForm.submitted && !physicalActivityObj.duration
+            "
+            class="text-danger"
+          >
+            Duration is required.
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="caloriesBurned">Calories Burned</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="physicalActivityObj.caloriesBurned"
+            name="caloriesBurned"
+            disabled
+            placeholder="Calculated Automatically"
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="exerciseDate">Exercise Date</label>
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="physicalActivityObj.exerciseDate"
+            name="exerciseDate"
+            required
+          />
+          <div
+            *ngIf="
+              physicalActivityForm.submitted &&
+              !physicalActivityObj.exerciseDate
+            "
+            class="text-danger"
+          >
+            Exercise date is required.
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn profile-button w-100"
+          [disabled]="isSubmitting || !physicalActivityForm.valid"
+        >
+          {{ isEditing ? "Update Log" : "Create Log" }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Table Section: Right Side -->
+    <div class="col-md-7">
+      <table class="table table-bordered mt-4 mt-md-0">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Exercise Type</th>
+            <th>Duration</th>
+            <th>Calories Burned</th>
+            <th>Exercise Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of submittedLogs">
+            <td>{{ log.username }}</td>
+            <td>{{ getExerciseName(log.exerciseTypeId) }}</td>
+            <td>{{ log.duration }}</td>
+            <td>{{ log.caloriesBurned }}</td>
+            <td>{{ log.exerciseDate | date }}</td>
+            <td>
+              <button
+                class="btn btn-warning btn-sm me-2"
+                (click)="editLog(log)"
+              >
+                Edit
+              </button>
+              <!-- <button class="btn btn-danger btn-sm" (click)="deleteLog(log.logId)">Delete</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

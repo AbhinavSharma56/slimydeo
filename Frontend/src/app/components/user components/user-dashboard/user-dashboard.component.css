@@ -1,0 +1,99 @@
+/* Basic reset for padding and margins */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Home Page Styling */
+.home-page {
+  display: flex;
+  background-color: #ffffff; /* Lavender mist background */
+  background-size: cover;
+  background-position: center;
+  align-content: center;
+  justify-content: center;
+  height: 100vh;
+  margin-bottom: 1%; /* Add gap between content and footer */
+}
+
+.home-page h1 {
+  color: #020202; /* Indigo */
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.home-page p {
+  color: #3d3d3f; /* Slate blue */
+}
+
+/* Service Item Styling */
+.service-item {
+  background-color: rgba(255, 255, 255, 0.8); /* White with slight transparency */
+  color: #161516;
+  border: 2px solid #b19cd9; /* Lavender border */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin-bottom: 30px; /* Space between cards */
+}
+
+.service-item:hover {
+  transform: translateY(-10px); /* Slight lift on hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+}
+
+.service-item h2 {
+  font-size: 1.5rem;
+  color: #020202; /* Indigo */
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #3d3d3f; /* Slate blue */
+}
+
+.service-item button {
+  background-color: rgb(99, 39, 120); /* Slate blue */
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.service-item button:hover {
+  background-color: rgb(82, 32, 95); /* Darker purple on hover */
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto;
+  background-color: rgb(99, 39, 120); /* Violet background */
+  color: white;
+  padding: 20px 20px; /* Reduced padding for smaller footer */
+  text-align: center;
+}
+
+footer h3 {
+  margin-bottom: 10px; /* Reduced margin for smaller size */
+  font-size: 24px;
+}
+
+footer p {
+  font-size: 16px;
+}
+
+/* Button Styling */
+.btn-success {
+  background-color: #003276; /* Slate blue */
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: rgb(99, 39, 120); /* Medium purple */
+}

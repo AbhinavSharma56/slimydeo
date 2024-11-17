@@ -54,5 +54,45 @@ namespace ExerciseServiceAPI.Repository
                 .Where(log => log.Username == userName && log.ExerciseDate >= sevenDaysAgo)
                 .ToListAsync();
         }
+
+        public async Task<List<ExerciseLog>> GetExerciseLogsByUsernameAndDateAsync(string username, DateTime date)
+        {
+            try
+            {
+                // Fetch logs matching the username and the date
+                var exerciseLogs = await _context.ExerciseLogs
+                    .Where(el => el.Username == username && el.ExerciseDate.Date == date.Date)
+                    .ToListAsync();
+
+                return exerciseLogs;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetExerciseLogsByUsernameAndDateAsync: {ex.Message}");
+                throw new Exception("Failed to retrieve exercise logs.");
+            }
+        }
+
+        public async Task<List<ExerciseLog>> GetExerciseLogsByUsernameAsync(string username)
+        {
+            try
+            {
+                // Fetch logs matching the username
+                var exerciseLogs = await _context.ExerciseLogs
+                    .Where(el => el.Username == username)
+                    .ToListAsync();
+
+                return exerciseLogs;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use proper logging)
+                Console.Error.WriteLine($"Error in GetExerciseLogsByUsernameAsync: {ex.Message}");
+                throw new Exception("Failed to retrieve exercise logs.");
+            }
+        }
+
+
     }
 }

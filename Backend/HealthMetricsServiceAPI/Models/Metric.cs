@@ -11,7 +11,7 @@ namespace HealthMetricsServiceAPI.Models
         [Required]
         public string Unit { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
 }
