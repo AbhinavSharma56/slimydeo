@@ -10,27 +10,13 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 })
 export class DeleteMealComponent {
   @Input() student: any;
-  @Output() close = new EventEmitter<void>(); // Emit close event
-  @Output() success = new EventEmitter<string>(); // Emit success message
-  @Output() error = new EventEmitter<string>(); // Emit error message
+  @Output() close = new EventEmitter<void>();
+  @Output() success = new EventEmitter<void>();
 
-  //studentService = inject(StudentService);
-  successMessage: string = '';
-  errorMessage: string = '';
-
-  onDelete() {
-    // this.studentService.deleteStudent(this.student.studentId).subscribe(
-    //   (res: any) => {
-    //     this.success.emit('Student deleted successfully!');
-    //     this.close.emit(); // Emit close event
-    //   },
-    //   (error) => {
-    //     this.error.emit('Error occurred while deleting the student.');
-    //   }
-    // );
-  }
-
-  cancel() {
-    this.close.emit(); // Emit close event
+  onDelete(): void {
+    // Simulate API call to delete student
+    console.log('Student deleted:', this.student);
+    this.success.emit(); // Notify parent component
+    this.close.emit(); // Close the delete form
   }
 }

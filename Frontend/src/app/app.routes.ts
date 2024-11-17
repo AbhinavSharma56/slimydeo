@@ -14,6 +14,10 @@ import { HealthDashboardComponent } from './components/user components/health-da
 import { MealDashboardComponent } from './components/user components/meal-dashboard/meal-dashboard.component';
 import { MoodDashboardComponent } from './components/user components/mood-dashboard/mood-dashboard.component';
 import { UserProfileComponent } from './components/user components/user-profile/user-profile.component';
+import { ListMealComponent } from './components/user components/meal-dashboard/list-meal/list-meal.component';
+import { AddMealComponent } from './components/user components/meal-dashboard/add-meal/add-meal.component';
+import { UpdateMealComponent } from './components/user components/meal-dashboard/update-meal/update-meal.component';
+import { DeleteMealComponent } from './components/user components/meal-dashboard/delete-meal/delete-meal.component';
 
 export const routes: Routes = [
     { 
@@ -59,6 +63,26 @@ export const routes: Routes = [
             {
                 path: 'meal',
                 component: MealDashboardComponent,
+                children: [
+                    {
+                        path: '',
+                        component: ListMealComponent,
+                        children: [
+                            {
+                                path: 'add',
+                                component: AddMealComponent
+                            },
+                            {
+                                path: 'update',
+                                component: UpdateMealComponent
+                            },
+                            {
+                                path: 'delete',
+                                component: DeleteMealComponent
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 path: 'mood',

@@ -1,57 +1,46 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-meal',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './add-meal.component.html',
-  styleUrl: './add-meal.component.css'
+  styleUrls: ['./add-meal.component.css'], // Corrected property name
 })
 export class AddMealComponent {
-  studentObj: any = {
-    "studentId": 0,
-    "studentName": "",
-    "studentGrade": "",
-    "studentRollNo": "",
-    "isActive": true,
-    "createdDate": this.getCurrentLocalDateTime(), // Set to local time
-    "modifiedDate": this.getCurrentLocalDateTime() // Set to local time
+  student = { studentName: '', studentGrade: '', studentRollNo: '' };
+
+  @Output() success = new EventEmitter<void>(); // Emits success event to parent
+
+  onAdd(): void {
+    // Simulate API call to add student
+    if (this.isFormValid()) {
+      console.log('Student added:', this.student);
+      this.resetForm(); // Clear form fields after adding
+      this.success.emit(); // Notify parent component of success
+    } else {
+      console.error('Form validation failed. Please fill all required fields.');
+    }
   }
 
-  getCurrentLocalDateTime(): string {
-    const now = new Date();
-    const offsetMs = now.getTimezoneOffset() * 60 * 1000;
-    const localDateTime = new Date(now.getTime() - offsetMs).toISOString().slice(0, 16);
-    return localDateTime;
+  onCancel(): void {
+    // Logic to handle cancellation, if needed
+    console.log('Add operation cancelled');
+    this.resetForm();
   }
 
-  http = inject(HttpClient);
-  onSubmit(form: NgForm) {
-    debugger;
-    this.http.post(
-      "https://localhost:7088/api/TblStudents",
-      this.studentObj
-    ).subscribe(
-      (res: any) => {
-        if (res.studentId >= 0) {
-          alert("Student Record Created!");
-
-          // Reset the form to its initial state
-          form.resetForm({
-            studentId: 0,
-            studentName: '',
-            studentGrade: '',
-            studentRollNo: '',
-            isActive: true,
-            createdDate: this.getCurrentLocalDateTime(),
-            modifiedDate: this.getCurrentLocalDateTime()
-          });
-        } else {
-          alert("There was an error while creating the student record.");
-        }
-      }
+  private isFormValid(): boolean {
+    // Simple form validation logic
+    return (
+      this.student.studentName.trim() !== '' &&
+      this.student.studentGrade.trim() !== '' &&
+      this.student.studentRollNo.trim() !== ''
     );
+  }
+
+  private resetForm(): void {
+    // Reset the form fields
+    this.student = { studentName: '', studentGrade: '', studentRollNo: '' };
   }
 }

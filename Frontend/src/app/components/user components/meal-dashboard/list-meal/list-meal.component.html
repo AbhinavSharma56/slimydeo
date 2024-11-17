@@ -1,29 +1,40 @@
 <div class="row pt-2">
-    <div class="col-8">
-      <div class="card form-container">
-        <div class="card-header text-center bg-dark text-white">Student List</div>
-        <div class="card-body">
-          <div *ngIf="successMessage" class="alert alert-success mt-3">
-            {{ successMessage }}
+  <!-- Meal List -->
+  <div class="col-8">
+    <div class="card form-container">
+      <div class="card-header text-center bg-dark text-white">Meal List</div>
+      <div class="card-body">
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
           </div>
-          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-            {{ errorMessage }}
-          </div>
+        </div>
+        
+        <div *ngIf="!loading">
           <div class="table-responsive">
-            <table class="table table-bordered table-hover table-light">
-              <!-- Apply the table-light class -->
+            <table class="table table-bordered table-striped table-light">
               <thead class="table-light">
-                <!-- Use a dark heading style -->
                 <tr>
-                  <th>ID</th>
-                  <th>Name</th>
+                  <th>S.No</th>
+                  <th>Consumption Date</th>
+                  <th>Meal Type</th>
+                  <th>Foods</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of studentList">
-                  <td>{{ item.studentId }}</td>
-                  <td>{{ item.studentName }}</td>
+                <tr *ngFor="let item of mealList; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.consumptionDate | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ item.mealType }}</td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let food of item.foods">
+                        {{ food.foodName }} - {{ food.quantity }} {{ food.unit }}
+                      </li>
+                    </ul>
+                  </td>
                   <td>
                     <button class="btn btn-primary me-2 btn-black" (click)="onEdit(item)">
                       Edit
@@ -36,30 +47,25 @@
               </tbody>
             </table>
           </div>
-          <!-- <div *ngIf="successMessage" class="alert alert-success">
-            {{ successMessage }}
-          </div>
-          <div *ngIf="errorMessage" class="alert alert-danger">
-            {{ errorMessage }}
-          </div> -->
         </div>
       </div>
     </div>
-  
-    <div class="col-4">
-      <!-- <app-update
-        *ngIf="editing"
-        [student]="selectedStudent"
-        (close)="cancelEdit()"
-        (success)="handleSuccess($event)"
-        (error)="handleError($event)"
-      ></app-update>
-      <app-delete
-        *ngIf="deleting"
-        [student]="selectedStudent"
-        (close)="cancelDelete()"
-        (success)="handleSuccess($event)"
-        (error)="handleError($event)"
-      ></app-delete> -->
-    </div>
   </div>
+
+  <!-- Add/Edit/Delete Section -->
+  <div class="col-4">
+    <app-add-meal *ngIf="!editing && !deleting" (success)="refreshList()"></app-add-meal>
+    <!-- <app-update-meal 
+      *ngIf="editing"
+      [meal]="selectedMeal"
+      (close)="cancelEdit()"
+      (success)="refreshList()"
+    ></app-update-meal>
+    <app-delete-meal
+      *ngIf="deleting"
+      [meal]="selectedMeal"
+      (close)="cancelDelete()"
+      (success)="refreshList()"
+    ></app-delete-meal> -->
+  </div>
+</div>

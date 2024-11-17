@@ -1,30 +1,64 @@
 .card {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-  
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn-primary, .btn-secondary {
+  min-width: 100px; /* Ensure buttons have a minimum width */
+}
+
+.btn-secondary {
+  min-width: 100px;
+  background-color: #005a8d;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 50px 20px 50px 50px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 50, 118, 0.1); /* Updated box-shadow to reflect header color */
+}
+
 .card-header {
-    background-color: #000; 
-    color: #fff;            
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  background-color: #003276; /* Same blue as header nav link */
+  color: #ffffff;
+  padding: 10px;
+  font-size: 1.25rem;
+  border-radius: 10px 10px 0 0;
 }
-  
+
+.btn-black {
+  background-color: #003276; /* Matching the header nav link color */
+  color: #ffffff;
+  border: none;
+}
+
+.btn-black:hover {
+  background-color: #008152; /* Matching the header hover color */
+  color: #ffffff;
+}
+
 .form-check-input:checked {
-    background-color: #000; 
-    border-color: #000;     
-  }
-  
+  background-color: #003276; /* Matching the header color */
+  border-color: #003276;
+}
+
 .form-check-input:checked:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25); /* Focus effect */
+  box-shadow: 0 0 0 0.2rem rgba(0, 50, 118, 0.25); /* Focus effect using header color */
 }
-  
+
 .btn-primary {
-    background-color: #000; /* Black background for button */
-    border-color: #000;     /* Black border for button */
+  background-color: #003276; /* Matching header nav link color */
+  border-color: #003276;     
 }
-  
+
 .btn-primary:hover {
-    background-color: #333; /* Darker shade on hover */
-    border-color: #333;     /* Darker border on hover */
+  background-color: #008152; /* Hover effect matching header nav link */
+  border-color: #008152;     
 }
