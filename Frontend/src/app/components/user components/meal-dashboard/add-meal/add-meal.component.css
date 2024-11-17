@@ -1,0 +1,30 @@
+.card {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+.card-header {
+    background-color: #000; 
+    color: #fff;            
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+  
+.form-check-input:checked {
+    background-color: #000; 
+    border-color: #000;     
+  }
+  
+.form-check-input:checked:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25); /* Focus effect */
+}
+  
+.btn-primary {
+    background-color: #000; /* Black background for button */
+    border-color: #000;     /* Black border for button */
+}
+  
+.btn-primary:hover {
+    background-color: #333; /* Darker shade on hover */
+    border-color: #333;     /* Darker border on hover */
+}

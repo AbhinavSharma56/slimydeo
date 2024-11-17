@@ -1,0 +1,32 @@
+.form-group {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    min-width: 100px; /* Ensure buttons have a minimum width */
+  }
+  
+  .form-container {
+    max-width: 600px;
+    margin: 50px 20px 50px 50px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card-header {
+    background-color: #000; /* Black header */
+    color: #ffffff;
+    padding: 10px;
+    font-size: 1.25rem;
+    border-radius: 10px 10px 0 0;
+  }
+  .btn-black {
+    background-color: #000;
+    color: #ffffff;
+    border: none;
+  }
+  .btn-black:hover {
+    background-color: #333;
+    color: #ffffff;
+  }

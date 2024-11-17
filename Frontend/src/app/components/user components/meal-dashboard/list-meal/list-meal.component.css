@@ -1,0 +1,48 @@
+.row {
+    overflow-y: auto; /* Make the row scrollable */
+    max-height: 600px; /* Set a maximum height for the scrollable area */
+  }
+  
+  .table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling for the table */
+  }
+  
+  .alert {
+    margin-top: 15px; /* Add some spacing for alert messages */
+  }
+  
+  .btn-primary,
+  .btn-danger {
+    min-width: 100px; /* Ensure buttons have a minimum width */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 50px 20px 50px 50px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card-header {
+    background-color: #000; /* Black header */
+    color: #ffffff;
+    padding: 10px;
+    font-size: 1.25rem;
+    border-radius: 10px 10px 0 0;
+  }
+  .btn-black {
+    background-color: #000;
+    color: #ffffff;
+    border: none;
+  }
+  .btn-black:hover {
+    background-color: #333;
+    color: #ffffff;
+  }
+  

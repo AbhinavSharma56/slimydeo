@@ -1,1 +1,14 @@
-<p>delete-meal works!</p>
+<div class="card form-container">
+    <div class="card-header text-center bg-dark text-white">Delete Student</div>
+    <div class="card-body text-center">
+      <p class="confirm-text">
+        Are you sure you want to delete <strong>{{ student?.studentName }}</strong>?
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+        <button class="btn btn-secondary" (click)="close.emit()">Cancel</button>
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+    </div>
+  </div>

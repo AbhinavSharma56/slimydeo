@@ -1,0 +1,40 @@
+.form-container {
+    max-width: 500px;
+    margin: 50px 20px 50px 50px; /* Added right margin */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+    font-size: 1.25rem;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .confirm-text {
+    font-size: 1.1rem;
+    margin: 10px 0;
+  }
+  
+  .alert {
+    font-size: 0.95rem;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .btn-danger,
+  .btn-secondary {
+    min-width: 100px;
+  }

@@ -1,1 +1,65 @@
-<p>list-meal works!</p>
+<div class="row pt-2">
+    <div class="col-8">
+      <div class="card form-container">
+        <div class="card-header text-center bg-dark text-white">Student List</div>
+        <div class="card-body">
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light">
+              <!-- Apply the table-light class -->
+              <thead class="table-light">
+                <!-- Use a dark heading style -->
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of studentList">
+                  <td>{{ item.studentId }}</td>
+                  <td>{{ item.studentName }}</td>
+                  <td>
+                    <button class="btn btn-primary me-2 btn-black" (click)="onEdit(item)">
+                      Edit
+                    </button>
+                    <button class="btn btn-danger" (click)="onDelete(item)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div> -->
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-4">
+      <!-- <app-update
+        *ngIf="editing"
+        [student]="selectedStudent"
+        (close)="cancelEdit()"
+        (success)="handleSuccess($event)"
+        (error)="handleError($event)"
+      ></app-update>
+      <app-delete
+        *ngIf="deleting"
+        [student]="selectedStudent"
+        (close)="cancelDelete()"
+        (success)="handleSuccess($event)"
+        (error)="handleError($event)"
+      ></app-delete> -->
+    </div>
+  </div>
