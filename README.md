@@ -14,3 +14,4 @@ For Angular application, install these dependencies using npm:
   * ngx-toastr
   * bootstrap
   * @fontsource/montserrat
+  * npm install ng-recaptcha --legacy-peer-deps

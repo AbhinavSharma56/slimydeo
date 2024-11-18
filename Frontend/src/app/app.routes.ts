@@ -22,6 +22,7 @@ import { ExerciseTypeComponent } from './components/admin components/exercise-ty
 import { MoodTypeComponent } from './components/admin components/mood-type/mood-type.component';
 import { UserDataComponent } from './components/admin components/user-data/user-data.component';
 import { MetricTypeComponent } from './components/admin components/metric-type/metric-type.component';
+import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
     { 
@@ -40,6 +41,10 @@ export const routes: Routes = [
             { 
                 path: 'register', 
                 component: RegisterComponent
+            },
+            {
+                path: 'about',
+                component: AboutComponent
             },
             {
                 path: '',  

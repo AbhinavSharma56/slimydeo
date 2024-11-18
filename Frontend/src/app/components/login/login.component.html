@@ -28,9 +28,21 @@
                 name="password"
               />
             </div>
-            <button type="submit" class="btn btn-primary btn-block">
-              Submit
-            </button>
+            <div class="recaptcha">
+              <re-captcha
+                siteKey="6LcPtYIqAAAAALMORH9EmlWQeA5mmOL4rzrKNAmf"
+                (resolved)="resolved($event!)"
+              ></re-captcha>
+            </div>
+            <div class="login-container">
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="!captchaResolved"
+              >
+                Login
+              </button>
+            </div>
           </form>
         </div>
       </div>

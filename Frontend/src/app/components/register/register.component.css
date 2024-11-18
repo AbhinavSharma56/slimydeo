@@ -1,47 +1,78 @@
 .card {
   max-width: 100%;
   border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
 }
 
 .card-header {
-  background-color: #003276;
+  background: linear-gradient(135deg, #003276, #008152); /* Matches your theme gradient */
   color: #fff;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  font-weight: bold;
+  padding: 10px 15px; /* Adjusted padding for better appearance */
 }
 
-/* .form-check-input:checked {
-    background-color: #003276; 
-    border-color: #000;     
-  } */
-
 .form-check-input:checked:focus {
-  box-shadow: 0 0 0 0.2rem #008152; /* Focus effect */
+  box-shadow: 0 0 0 0.2rem #008152; /* Highlight matches secondary color */
 }
 
 .btn-primary {
-  background-color: #003276; /* Black background for button */
-  border-color: #000; /* Black border for button */
+  background-color: #003276; /* Primary theme color */
+  border-color: #003276;
   font-weight: bold;
+  color: #fff; /* Ensures text is visible on dark background */
+  padding: 10px 20px; /* Consistent padding for better button aesthetics */
+  border-radius: 5px; /* Smooth button corners */
 }
 
 .btn-primary:hover {
-  background-color: #008152; /* Darker shade on hover */
-  border-color: #333; /* Darker border on hover */
+  background-color: #008152; /* Secondary theme color on hover */
+  border-color: #008152; /* Matches hover color */
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
 }
 
-/* Custom styling for date picker */
 .datepicker {
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
+  background-color: #f8f9fa; /* Neutral background for date picker */
+  border: 1px solid #ced4da; /* Subtle border for input */
   border-radius: 5px;
   padding: 0.5rem;
   font-size: 1rem;
-  color: #495057;
+  color: #495057; /* Consistent text color */
 }
 
 .datepicker:focus {
-  border-color: #003276;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem #003276;
+  border-color: #003276; /* Matches theme focus color */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem #003276; /* Consistent focus shadow */
+}
+
+.recaptcha {
+  margin-bottom: 20px; /* Consistent spacing for reCAPTCHA element */
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.login-container .btn-primary {
+  width: 200px; /* Ensures button alignment and size consistency */
+}
+
+/* Additional Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
 }

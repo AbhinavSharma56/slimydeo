@@ -8,7 +8,7 @@
 
 .background {
   background-image: url("/img/bg.png"); /* Path to your image */
-  background-size: contain; /* Ensures the image covers the screen */
+  background-size: 80%; /* Ensures the image covers the screen */
   background-position: center; /* Center the background */
   background-repeat: no-repeat; /* Prevents tiling */
   height: 80vh; /* Full viewport height */
