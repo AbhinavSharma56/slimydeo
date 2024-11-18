@@ -71,10 +71,15 @@ main.home-main {
   text-align: justify;
   width: 100%;
   z-index: 2; /* Ensure the content is on top of the images */
+  opacity: 0; /* Start with no visibility */
+  animation: fadeInUp 1.5s ease-out forwards; /* Animation for smooth entrance */
 }
 
 .content h1 {
   font-size: 3rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  color: #003276;
 }
 
 .content h1 span {
@@ -97,6 +102,47 @@ main.home-main {
   color: #003276;
 }
 
+/* Animation for fading and moving upwards */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bottom content styling */
+.bottom-content {
+  font-size: 1.1em;
+  color: #003276;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0; /* Start with no visibility */
+  animation: fadeInUp 2s ease-out 0.5s forwards; /* Animation for bottom content */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #008152;
+  letter-spacing: 1px;
+}
+
+.bottom-content p {
+  font-size: 1.3em;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); /* Shadow for the text */
+}
+
+.bottom-content:hover {
+  color: #003276;
+  transform: translateX(-50%) scale(1.05); /* Slightly increase size on hover */
+  transition: all 0.3s ease;
+}
+
 .down-arrow {
   font-size: 0.8em;
   margin-top: 20px;
@@ -110,13 +156,3 @@ main.home-main {
   color: #008152;
 }
 
-.bottom-content {
-  font-size: 1.1em;
-  color: #003276;
-  margin-top: 20px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-}
