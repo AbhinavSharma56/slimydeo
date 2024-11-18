@@ -119,7 +119,6 @@
       <table class="table table-bordered mt-4 mt-md-0">
         <thead>
           <tr>
-            <th>Username</th>
             <th>Exercise Type</th>
             <th>Duration</th>
             <th>Calories Burned</th>
@@ -129,7 +128,6 @@
         </thead>
         <tbody>
           <tr *ngFor="let log of submittedLogs">
-            <td>{{ log.username }}</td>
             <td>{{ getExerciseName(log.exerciseTypeId) }}</td>
             <td>{{ log.duration }}</td>
             <td>{{ log.caloriesBurned }}</td>

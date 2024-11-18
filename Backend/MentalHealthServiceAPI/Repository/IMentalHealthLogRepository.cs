@@ -15,5 +15,7 @@ namespace MentalHealthServiceAPI.Repository
         Task DeleteMentalHealthLogAsync(int mentalHealthLogId);
 
         Task UpdateMentalHealthLogAsync(MentalHealthLog mentalHealthLog);
+
+        Task<IEnumerable<MentalHealthLog>> GetMentalHealthLogByUsernameAsync(string username);
     }
 }

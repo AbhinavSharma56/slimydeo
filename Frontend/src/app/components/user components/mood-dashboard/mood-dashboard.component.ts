@@ -30,12 +30,22 @@ export class MoodDashboardComponent {
     this.loadMoods();
   }
 
+  username = localStorage.getItem('loggedUser');
+
   // Fetch the list of existing mental health logs from the API
   fetchMentalHealthLogs(): void {
-    this.http.get<any[]>('https://localhost:7283/api/MentalHealthLog')
+    this.http.get<any[]>(`https://localhost:7283/api/MentalHealthLog/user/${this.username}`)
       .subscribe(
         (data) => {
           this.submittedLogs = data;  // Store fetched data
+          this.submittedLogs.forEach(log => {
+            const mood = this.moods.find(m => m.moodId === log.moodId);
+            console.log(mood);
+            if (mood) {
+              log.moodName = mood.moodName;
+              log.moodDescription = mood.moodDescription;
+            }
+          });
           this.cd.detectChanges();     // Ensure view updates after data changes
         },
         (error) => {

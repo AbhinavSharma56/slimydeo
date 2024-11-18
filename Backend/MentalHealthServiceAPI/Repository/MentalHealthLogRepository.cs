@@ -47,6 +47,14 @@ namespace MentalHealthServiceAPI.Repository
             }
         }
 
+        public async Task<IEnumerable<MentalHealthLog>> GetMentalHealthLogByUsernameAsync(string username)
+        {
+            return await _dbContext.MentalHealthLogs
+                .Where(x => x.Username == username)
+                .ToListAsync();
+        }
+
+
         private async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();

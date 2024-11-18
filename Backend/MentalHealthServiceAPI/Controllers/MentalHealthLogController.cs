@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MentalHealthServiceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/MentalHealthLog")]
     [ApiController]
     public class MentalHealthLogController : ControllerBase
     {
@@ -87,6 +87,18 @@ namespace MentalHealthServiceAPI.Controllers
 
             await _mentalHealthLogRepository.DeleteMentalHealthLogAsync(id);
             return Ok("Mental Health Log deleted successfully.");
+        }
+
+        // GET: api/mentalHealthLog/user/{username}
+        [HttpGet("user/{username}")]
+        public async Task<IActionResult> GetLogsByUser(string username)
+        {
+            var mentalHealthLog = await _mentalHealthLogRepository.GetMentalHealthLogByUsernameAsync(username);
+            if (mentalHealthLog == null)
+            {
+                return NotFound("Mental Health Log not found.");
+            }
+            return Ok(mentalHealthLog);
         }
     }
 }

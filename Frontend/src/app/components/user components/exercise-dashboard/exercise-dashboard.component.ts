@@ -32,9 +32,9 @@ export class ExerciseDashboardComponent {
     this.fetchPhysicalActivityLogs();
     this.fetchExerciseTypes();
   }
-
+  user = localStorage.getItem('loggedUser');
   fetchPhysicalActivityLogs(): void {
-    this.http.get<any[]>('https://localhost:7210/api/ExerciseLog').subscribe(
+    this.http.get<any[]>(`https://localhost:7210/api/ExerciseLog/user/${this.user}`).subscribe(
       (data) => (this.submittedLogs = data),
       (err) => console.error('Error fetching logs', err)
     );
