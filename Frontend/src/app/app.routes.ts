@@ -21,6 +21,7 @@ import { DeleteMealComponent } from './components/user components/meal-dashboard
 import { ExerciseTypeComponent } from './components/admin components/exercise-type/exercise-type.component';
 import { MoodTypeComponent } from './components/admin components/mood-type/mood-type.component';
 import { UserDataComponent } from './components/admin components/user-data/user-data.component';
+import { MetricTypeComponent } from './components/admin components/metric-type/metric-type.component';
 
 export const routes: Routes = [
     { 
@@ -107,6 +108,10 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminNavbarComponent ,
         children: [
+            {
+                path: 'metric-type',
+                component: MetricTypeComponent
+            },
             {
                 path: 'exercise-type',
                 component: ExerciseTypeComponent
