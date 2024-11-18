@@ -37,4 +37,13 @@ export class MealService {
   deleteMeal(mealId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/Meal/${mealId}`);
   }
+
+  // Update meal details by ID
+  updateMeal(meal: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Meal/${meal.mealId}`, meal);
+  }
+
+  updateFoodBulk(foods: any[]): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Food/bulk-update`, foods);
+  }
 }

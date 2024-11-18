@@ -147,5 +147,25 @@ namespace DietServiceAPI.Controllers
             }
         }
 
+        // PUT: api/food/bulk-update
+        [HttpPut("bulk-update")]
+        public async Task<ActionResult<ApiResponse<List<Food>>>> UpdateMultipleFoods(List<Food> foods)
+        {
+            if (foods == null || !foods.Any())
+            {
+                return BadRequest(new ApiResponse<List<Food>>(false, "Food list cannot be empty."));
+            }
+
+            var response = await _foodRepository.UpdateMultipleFoodsAsync(foods);
+
+            if (response == null || !response.Success)
+            {
+                return StatusCode(500, new ApiResponse<List<Food>>(false, "Failed to update foods."));
+            }
+
+            return Ok(response);
+        }
+
+
     }
 }

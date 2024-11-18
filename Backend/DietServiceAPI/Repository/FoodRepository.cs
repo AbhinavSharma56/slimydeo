@@ -9,11 +9,13 @@ namespace DietServiceAPI.Repository
     {
         private readonly DietDbContext _context;
         private readonly IFoodDetailsService _foodDetailsService;
+        private readonly IFoodDetailsRepository _foodDetailsRepository;
 
-        public FoodRepository(DietDbContext context, IFoodDetailsService foodDetailsService)
+        public FoodRepository(DietDbContext context, IFoodDetailsService foodDetailsService, IFoodDetailsRepository foodDetailsRepository)
         {
             _context = context;
             _foodDetailsService = foodDetailsService;
+            _foodDetailsRepository = foodDetailsRepository;
         }
 
         public async Task<ApiResponse<IEnumerable<Food>>> GetAllFoodsAsync()
@@ -171,6 +173,68 @@ namespace DietServiceAPI.Repository
                 throw new Exception("Failed to retrieve food items for the provided meal IDs.");
             }
         }
+
+        public async Task<ApiResponse<List<Food>>> UpdateMultipleFoodsAsync(List<Food> foods)
+        {
+            try
+            {
+                var updatedFoods = new List<Food>();
+                var errors = new List<string>();
+
+                foreach (var food in foods)
+                {
+                    var existingFood = await _context.Foods.FindAsync(food.FoodId);
+                    if (existingFood == null)
+                    {
+                        // Return a response indicating that one of the foods was not found
+                        errors.Add($"Food with ID {food.FoodId} not found.");
+                        continue;
+                    }
+
+                    // Update the food properties
+                    existingFood.FoodName = food.FoodName;
+                    existingFood.Quantity = food.Quantity;
+                    existingFood.Unit = food.Unit;
+
+                    _context.Foods.Update(existingFood); // Mark the entity as updated
+                    updatedFoods.Add(existingFood);
+
+                    // Delete the existing food details
+                    var foodDetailsDeleted = await _foodDetailsRepository.DeleteFoodDetailsAsync(food.FoodId);
+                    if (!foodDetailsDeleted)
+                    {
+                        errors.Add($"Failed to delete food details for FoodId: {food.FoodId}");
+                        continue;
+                    }
+
+                    // Re-add the updated food details
+                    bool isFoodDetailsUpdated = await _foodDetailsService.AddFoodDetails(food.FoodId, food.FoodName, food.Quantity, food.Unit);
+                    if (!isFoodDetailsUpdated)
+                    {
+                        // Log or handle the failure to update food details for a particular food item
+                        errors.Add($"Failed to update details for FoodId: {food.FoodId}");
+                    }
+                }
+
+                // Save all changes to the database
+                await _context.SaveChangesAsync();
+
+                // Check if there were any errors
+                if (errors.Any())
+                {
+                    return new ApiResponse<List<Food>>(false, string.Join("; ", errors));
+                }
+
+                return new ApiResponse<List<Food>>(true, "Foods and their details updated successfully", updatedFoods);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a failure response
+                return new ApiResponse<List<Food>>(false, $"An error occurred: {ex.Message}", null);
+            }
+        }
+
+
 
     }
 }

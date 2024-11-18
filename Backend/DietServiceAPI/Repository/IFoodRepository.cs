@@ -12,5 +12,6 @@ namespace DietServiceAPI.Repository
         Task<ApiResponse<IEnumerable<Food>>> GetFoodsByMealIdAsync(int mealId);
         Task<ApiResponse<List<int>>> AddMultipleFoodsAsync(List<Food> foods);
         Task<List<Food>> GetFoodsByMealIds(List<int> mealIds);
+        Task<ApiResponse<List<Food>>> UpdateMultipleFoodsAsync(List<Food> foods);
     }
 }

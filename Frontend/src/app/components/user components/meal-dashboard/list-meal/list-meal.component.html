@@ -60,6 +60,7 @@
       [meal]="selectedMeal"
       (close)="cancelEdit()"
       (success)="refreshList()"
+      (reload)="refreshList()">
     ></app-update-meal>
     <app-delete-meal
       *ngIf="deleting"

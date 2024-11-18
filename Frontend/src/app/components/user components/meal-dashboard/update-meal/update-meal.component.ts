@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MealService } from '../../../../services/meal.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,12 +17,13 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './update-meal.component.html',
-  styleUrl: './update-meal.component.css',
+  styleUrls: ['./update-meal.component.css'],
 })
 export class UpdateMealComponent implements OnChanges {
   @Input() meal: any; // Meal object passed from parent
   @Output() close = new EventEmitter<void>(); // Notify parent to close the modal
   @Output() success = new EventEmitter<void>(); // Notify parent on successful update
+  @Output() reload = new EventEmitter<void>()
 
   foods: any[] = [];
   mealTypes = [
@@ -50,10 +59,11 @@ export class UpdateMealComponent implements OnChanges {
   ) {}
 
   ngOnInit(): void {
-    // Load existing foods associated with the meal
-    this.loadFoods();
+    if (this.meal?.mealId) {
+      this.loadFoods(); // Load foods if the mealId exists
+    }
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['meal'] && this.meal?.mealId) {
       this.loadFoods(); // Refresh foods whenever a new meal is selected
@@ -67,48 +77,62 @@ export class UpdateMealComponent implements OnChanges {
           this.foods = response.data; // Populate foods array with response data
           this.toastr.success('Food details loaded successfully.');
         } else {
-          // Display the error message from the response if available
           this.toastr.error(response.message || 'Failed to load food details.');
         }
       },
       error: () => {
-        // Generic error message in case of network or other unexpected errors
         this.toastr.error('Failed to load food details.');
       },
     });
-  }  
+  }
 
+  // Update the meal information
   updateMeal(): void {
-    // this.mealService.updateMeal(this.meal).subscribe({
-    //   next: (response) => {
-    //     if (response.success) {
-    //       this.updateFoods();
-    //     } else {
-    //       this.toastr.error(response.message || 'Failed to update meal.');
-    //     }
-    //   },
-    //   error: () => this.toastr.error('Failed to update meal.'),
-    // });
+    const updatedMeal = {
+      mealId: this.meal.mealId,
+      username: localStorage.getItem('loggedUser'),
+      mealType: this.meal.mealType,
+      consumptionDate: this.meal.consumptionDate,
+    };
+
+    this.mealService.updateMeal(updatedMeal).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.success.emit(); // Notify parent of success
+          this.close.emit(); // Close the form
+          this.updateFoods(); // After meal update, update the foods
+        } else {
+          this.toastr.error(response.message || 'Failed to update meal.');
+        }
+      },
+      error: () => this.toastr.error('Failed to update meal.'),
+    });
   }
 
+  // Update food items in bulk after meal update
   updateFoods(): void {
-    // this.mealService.updateFoodsBulk(this.foods).subscribe({
-    //   next: (response) => {
-    //     if (response.success) {
-    //       this.toastr.success('Meal and foods updated successfully.');
-    //       this.success.emit(); // Notify parent of success
-    //       this.close.emit(); // Close the form
-    //     } else {
-    //       this.toastr.error(
-    //         response.message || 'Failed to update food details.'
-    //       );
-    //     }
-    //   },
-    //   error: () => this.toastr.error('Failed to update food details.'),
-    // });
+    this.mealService.updateFoodBulk(this.foods).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.toastr.success('Meal and foods updated successfully.');
+          this.success.emit(); // Notify parent of success
+          this.close.emit(); // Close the form
+        } else {
+          this.toastr.error(
+            response.message || 'Failed to update food details.'
+          );
+        }
+      },
+      error: () => {
+        this.toastr.error('Failed to update food details.');
+      },
+    });
   }
+  
 
+  // Cancel and close the update form
   cancel(): void {
     this.close.emit(); // Notify parent to close the form
+    this.reload.emit();
   }
 }
