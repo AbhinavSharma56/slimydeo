@@ -5,33 +5,46 @@
 }
 
 /* Set background for full viewport */
-
 .background {
-  background-image: url("/img/bg.png"); /* Path to your image */
-  background-size: 80%; /* Ensures the image covers the screen */
-  background-position: center; /* Center the background */
-  background-repeat: no-repeat; /* Prevents tiling */
-  height: 80vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  background-color: #fff; /* Light background color to make the images stand out */
+  height: 80vh;
+  width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  position: relative; /* Allows absolute positioning for images */
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .background {
-    background-size: contain; /* Keeps image aspect ratio on smaller screens */
-    background-position: top center;
-  }
-}
-@media (max-width: 480px) {
-  .background {
-    background-size: cover;
-    background-position: center;
-  }
+.background-images {
+  position: absolute;
+  z-index: 1; /* Place images below the text content */
 }
 
+.med-img,
+.diet-img {
+  z-index: 0;
+  /* opacity: 0.7; Uncomment if you want to make images slightly transparent */
+}
+
+/* Position diet image at the bottom-left corner */
+.diet-img {
+  left: 0; /* Align the diet image to the left side */
+  bottom: 0; /* Align it to the bottom */
+  width: 80%; /* Adjust size */
+  height: auto;
+  max-height: 80%;
+}
+
+/* Position med image at the far-right */
+.med-img {
+  top: 1%; /* Adjust space from the top */
+  right: 0; /* Align the med image to the right side */
+  height: 80vh; /* Match the height to 80% of the viewport */
+  width: auto; /* Keep aspect ratio intact */
+  max-height: 80vh;
+}
+
+/* Content styling */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -53,11 +66,13 @@ main.home-main {
 
 .content {
   position: relative;
-  left: 20%;
+  left: 8%;
   padding: 50px;
   text-align: justify;
   width: 100%;
+  z-index: 2; /* Ensure the content is on top of the images */
 }
+
 .content h1 {
   font-size: 3rem;
 }
@@ -68,74 +83,39 @@ main.home-main {
   margin-top: -10px;
 }
 
-/* .illustrations {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-} */
-
-/* .about-container {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  width: 100%;
-}
-.about-section {
-  position: relative;
-  padding: 50px;
-  text-align: center;
-  background-color: #f4f4f4;
-  width: 100%;
-  /* Pushes the about section to always be at the bottom
-  margin-top: auto;
-}
-
-.about-section h2 {
-  font-size: 2em;
-  color: #003366;
-}
-
-.about-section p {
-  font-size: 1.1em;
-  color: #666666;
-  margin-top: 10px;
-} */
-
 #wellness {
-  font-family: 'Marykate', cursive;
-  font-weight: bold;
-  font-weight: 700; /* Optional: Set font weight */
-  color: #003276; /* Add color if needed */
-  top: 50%;
-  left: 30%;
+  font-family: "Marykate", cursive;
+  font-weight: 700;
+  color: #003276;
 }
 
 #hub {
   position: relative;
-  left: 4%;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400; /* Optional: Set font weight */
-  color: #003276; /* Add color if needed */
+  left: 13%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  color: #003276;
 }
+
 .down-arrow {
   font-size: 0.8em;
   margin-top: 20px;
   color: #003276;
   cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .down-arrow:hover {
-  transform: scale(0.9); /* Zoom out effect */
-  color: #008152; /* Change color on hover */
+  transform: scale(0.9);
+  color: #008152;
 }
+
 .bottom-content {
   font-size: 1.1em;
   color: #003276;
   margin-top: 20px;
   position: absolute;
-  bottom: 20px; /* Adjust as needed */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
