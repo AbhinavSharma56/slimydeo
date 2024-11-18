@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { AddMealComponent } from '../add-meal/add-meal.component';
 import { UpdateMealComponent } from '../update-meal/update-meal.component';
 import { DeleteMealComponent } from '../delete-meal/delete-meal.component';
 import { ToastrService } from 'ngx-toastr';
-import { MealService } from '../../../../services/meal.service';// Assuming you have this service
+import { MealService } from '../../../../services/meal.service'; // Assuming you have this service
 
 @Component({
   selector: 'app-list-meal',
@@ -62,7 +62,7 @@ export class ListMealComponent implements OnInit {
           this.loading = false; // Hide loading spinner
           this.toastr.error('Failed to load meals');
           this.retryAfterDelay(); // Prompt to retry after 1 minute
-        }
+        },
       });
     }
   }
@@ -70,14 +70,16 @@ export class ListMealComponent implements OnInit {
   retryAfterDelay() {
     // Show retry prompt after 1 minute
     this.retryTimeout = setTimeout(() => {
-      this.toastr.info('Please retry to load meals', 'Retry', {
-        closeButton: true,
-        timeOut: 0,
-        extendedTimeOut: 0,
-        progressBar: true,
-      }).onTap.subscribe(() => {
-        this.loadMeals(); // Retry the API call
-      });
+      this.toastr
+        .info('Please retry to load meals', 'Retry', {
+          closeButton: true,
+          timeOut: 0,
+          extendedTimeOut: 0,
+          progressBar: true,
+        })
+        .onTap.subscribe(() => {
+          this.loadMeals(); // Retry the API call
+        });
     }, 60000); // 1 minute delay
   }
   // Method to fetch foods for the corresponding meal IDs
@@ -109,15 +111,15 @@ export class ListMealComponent implements OnInit {
     this.deleting = false;
   }
 
+  cancelEdit(): void {
+    this.editing = false;
+    this.selectedMeal = null;
+  }
+
   onDelete(meal: any): void {
     this.selectedMeal = meal;
     this.deleting = true;
     this.editing = false;
-  }
-
-  cancelEdit(): void {
-    this.editing = false;
-    this.selectedMeal = null;
   }
 
   cancelDelete(): void {

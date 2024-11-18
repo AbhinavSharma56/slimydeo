@@ -15,7 +15,7 @@
           </option>
         </select>
       </div>
-      
+
       <div class="form-group mb-3">
         <label for="consumptionDate">Consumption Date:</label>
         <input
@@ -26,6 +26,7 @@
           required
         />
       </div>
+
       <div class="form-group mb-3">
         <label for="foodItemsCount">Number of Food Items:</label>
         <input
@@ -37,10 +38,10 @@
         />
       </div>
 
-      <div *ngFor="let food of foodDetails; let i = index" class="food-item">
+      <div *ngFor="let food of foods; let i = index" class="food-item">
         <h5>Food Item {{ i + 1 }}</h5>
         <div class="form-group mb-3">
-          <label for="foodName">Food Name:</label>
+          <label for="foodName{{ i }}">Food Name:</label>
           <input
             type="text"
             [(ngModel)]="food.foodName"
@@ -50,7 +51,7 @@
           />
         </div>
         <div class="form-group mb-3">
-          <label for="quantity">Quantity:</label>
+          <label for="quantity{{ i }}">Quantity:</label>
           <input
             type="number"
             [(ngModel)]="food.quantity"
@@ -60,14 +61,17 @@
           />
         </div>
         <div class="form-group mb-3">
-          <label for="unit">Unit:</label>
-          <input
-            type="text"
+          <label for="unit{{ i }}">Unit:</label>
+          <select
             [(ngModel)]="food.unit"
             [name]="'unit' + i"
             class="form-control"
             required
-          />
+          >
+            <option *ngFor="let unit of units" [value]="unit">
+              {{ unit }}
+            </option>
+          </select>
         </div>
       </div>
 

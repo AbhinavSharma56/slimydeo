@@ -12,11 +12,25 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-meal.component.css'], // Corrected property name
 })
 export class AddMealComponent {
-  meal = { mealId: 0, username: '', mealType: '', consumptionDate: '' };
-  foodDetails: any[] = [];
+  @Output() success = new EventEmitter<void>();
+
+  meal = {
+    mealId: 0,
+    username: '',
+    mealType: '',
+    consumptionDate: this.getCurrentDateTime(),
+  };
+  foods: any[] = [
+    {
+      foodId: 0,
+      foodName: '',
+      quantity: 0,
+      unit: '',
+      mealId: 0,
+    },
+  ];
   foodItemsCount = 1;
 
-  // Meal type options
   mealTypes = [
     { value: 'BREAKFAST', display: 'Breakfast' },
     { value: 'SNACK (MORNING)', display: 'Snack (Morning)' },
@@ -25,51 +39,78 @@ export class AddMealComponent {
     { value: 'DINNER', display: 'Dinner' },
   ];
 
+  units: string[] = [
+    'nos', 'no', 'cup', 'bowl (2 cups)', 'g', 'wt. oz', 'tsp', 
+    'tbsp', 'cup', 'NLEA serving', 'oz', 'fl oz', 'glass', 
+    'ml', 'l', 'g', 'mg'
+  ];  
+
   constructor(
     private mealService: MealService,
     private toastr: ToastrService
   ) {}
 
+  username = localStorage.getItem('loggedUser');
+
+  // Helper method to get current date and time in 'YYYY-MM-DDTHH:mm' format
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Format for datetime-local input
+  }
+
   updateFoodItemsCount(): void {
-    this.foodDetails = Array(this.foodItemsCount).fill({
+    this.foods = Array.from({ length: this.foodItemsCount }, () => ({
       foodId: 0,
       foodName: '',
       quantity: 0,
       unit: '',
-    });
+      mealId: 0,
+    }));
   }
 
   addMeal(): void {
-    if (localStorage.getItem('loggedUser') !== null) {
-      this.meal.username = localStorage.getItem('loggedUser')!;
+    if (this.username) {
+      this.meal.username = this.username; // Assign logged user's username to the meal
+      this.mealService.addMeal(this.meal).subscribe({
+        next: (response) => {
+          if (response.success) {
+            const mealId = response.data.mealId;
+            this.foods.forEach((food) => (food.mealId = mealId)); // Update mealId for each food item
+            this.addFoods();
+          }
+        },
+        error: () => this.toastr.error('Failed to add meal.'),
+      });
     }
-    this.mealService.addMeal(this.meal).subscribe({
-      next: (response) => {
-        if (response.success) {
-          const mealId = response.data.mealId;
-          this.addFoodDetails(mealId);
-        }
-      },
-      error: () => this.toastr.error('Failed to add meal.'),
-    });
   }
 
-  addFoodDetails(mealId: number): void {
-    this.mealService.addFoodDetailsBulk(mealId, this.foodDetails).subscribe({
+  addFoods(): void {
+    this.mealService.addFoodsBulk(this.foods).subscribe({
       next: (response) => {
         if (response.success) {
           this.toastr.success('Meal and foods added successfully.');
-          this.resetForm();
+        } else {
+          // Show error message from response if success is false
+          this.toastr.error(response.message || 'Failed to add food details.');
         }
+        this.success.emit();
+        this.resetForm();
       },
-      error: () => this.toastr.error('Failed to add food details.'),
+      error: () => {
+        // Show a generic error message in case of a network or other unexpected error
+        this.toastr.error('Failed to add food details.');
+      },
     });
   }
+  
 
   resetForm(): void {
-    this.meal = { mealId: 0, username: '', mealType: '', consumptionDate: '' };
-    this.foodDetails = [];
+    this.meal = { 
+      mealId: 0, 
+      username: '', 
+      mealType: '', 
+      consumptionDate: this.getCurrentDateTime() };
     this.foodItemsCount = 1;
-    this.updateFoodItemsCount();
+    this.updateFoodItemsCount();    
   }
 }

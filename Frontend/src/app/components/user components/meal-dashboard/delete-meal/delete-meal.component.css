@@ -1,40 +1,65 @@
+/* Styling for the delete meal card */
 .form-container {
-    max-width: 500px;
-    margin: 50px 20px 50px 50px; /* Added right margin */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-header {
-    background-color: #343a40;
-    color: white;
-    padding: 10px;
-    font-size: 1.25rem;
-    border-radius: 10px 10px 0 0;
-  }
-  
-  .confirm-text {
-    font-size: 1.1rem;
-    margin: 10px 0;
-  }
-  
-  .alert {
-    font-size: 0.95rem;
-  }
-  
-  .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .btn-danger,
-  .btn-secondary {
-    min-width: 100px;
-  }
+  max-width: 500px;
+  margin: 50px 20px 50px 50px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling with dark background */
+.card-header {
+  background: linear-gradient(135deg, #003276, #008152);
+  color: white;
+  padding: 10px;
+  font-size: 1.25rem;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif; /* Common font */
+  max-height: 80vh; /* Limit height to 80% of viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+/* Confirmation text styling */
+.confirm-text {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+/* Buttons styling for delete and cancel actions */
+.btn-danger,
+.btn-secondary {
+  min-width: 100px;
+  border-radius: 5px;
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Primary button color for delete */
+.btn-danger {
+  background-color: #e53935;
+  border-color: #e53935;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+/* Secondary button color for cancel */
+.btn-secondary {
+  background-color: #4a6f96;
+  border-color: #4a6f96;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #1e4b76;
+  border-color: #1e4b76;
+}

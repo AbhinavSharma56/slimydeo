@@ -8,8 +8,8 @@
 
 .background {
   background-image: url("/img/bg.png"); /* Path to your image */
-  background-size: cover; /* Ensures the image covers the screen */
-  background-position: left; /* Center the background */
+  background-size: contain; /* Ensures the image covers the screen */
+  background-position: center; /* Center the background */
   background-repeat: no-repeat; /* Prevents tiling */
   height: 80vh; /* Full viewport height */
   width: 100vw; /* Full viewport width */
@@ -118,12 +118,17 @@ main.home-main {
   font-weight: 400; /* Optional: Set font weight */
   color: #003276; /* Add color if needed */
 }
-
 .down-arrow {
-  font-size: 2em;
+  font-size: 0.8em;
   margin-top: 20px;
   color: #003276;
   cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.down-arrow:hover {
+  transform: scale(0.9); /* Zoom out effect */
+  color: #008152; /* Change color on hover */
 }
 .bottom-content {
   font-size: 1.1em;

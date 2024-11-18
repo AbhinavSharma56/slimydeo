@@ -1,5 +1,6 @@
 ﻿using DietServiceAPI.Data;
 using DietServiceAPI.Models;
+using DietServiceAPI.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace DietServiceAPI.Repository
@@ -7,10 +8,12 @@ namespace DietServiceAPI.Repository
     public class FoodRepository : IFoodRepository
     {
         private readonly DietDbContext _context;
+        private readonly IFoodDetailsService _foodDetailsService;
 
-        public FoodRepository(DietDbContext context)
+        public FoodRepository(DietDbContext context, IFoodDetailsService foodDetailsService)
         {
             _context = context;
+            _foodDetailsService = foodDetailsService;
         }
 
         public async Task<ApiResponse<IEnumerable<Food>>> GetAllFoodsAsync()
@@ -35,10 +38,35 @@ namespace DietServiceAPI.Repository
 
         public async Task<ApiResponse<Food>> AddFoodAsync(Food food)
         {
-            _context.Foods.Add(food);
-            await _context.SaveChangesAsync();
-            return new ApiResponse<Food>(true, "Food added successfully", food);
+            try
+            {
+                // Add the food to the database
+                _context.Foods.Add(food);
+                await _context.SaveChangesAsync();
+
+                int foodId = food.FoodId;
+                string foodName = food.FoodName;
+                int quantity = food.Quantity;
+                string unit = food.Unit;
+
+                // After saving the food, add the food details using the Nutritionix API
+                bool isFoodDetailsAdded = await _foodDetailsService.AddFoodDetails(foodId, foodName, quantity, unit);
+
+                if (isFoodDetailsAdded)
+                {
+                    return new ApiResponse<Food>(true, "Food and Food details added successfully", food);
+                }
+                else
+                {
+                    return new ApiResponse<Food>(false, "Food added, but failed to retrieve food details.", food);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<Food>(false, $"An error occurred: {ex.Message}", null);
+            }
         }
+
 
         public async Task<ApiResponse<Food>> UpdateFoodAsync(Food food)
         {
@@ -100,10 +128,23 @@ namespace DietServiceAPI.Repository
 
                 await _context.SaveChangesAsync(); // Save all changes at once
 
+                // After saving foods, we can retrieve the FoodId for each added food and add their details.
+                foreach (var food in foods)
+                {
+                    bool isFoodDetailsAdded = await _foodDetailsService.AddFoodDetails(food.FoodId, food.FoodName, food.Quantity, food.Unit);
+                    if (!isFoodDetailsAdded)
+                    {
+                        // Log or handle the failure to add food details for a particular food item.
+                        // You can return a failure message or continue with others.
+                        // Here, I'm just logging it and continuing.
+                        Console.WriteLine($"Failed to add details for FoodId: {food.FoodId}");
+                    }
+                }
+
                 // Retrieve IDs of the newly added food items
                 addedFoodIds = foods.Select(f => f.FoodId).ToList();
 
-                return new ApiResponse<List<int>>(true, "Foods added successfully", addedFoodIds);
+                return new ApiResponse<List<int>>(true, "Foods and their details added successfully", addedFoodIds);
             }
             catch (Exception ex)
             {
@@ -111,6 +152,7 @@ namespace DietServiceAPI.Repository
                 return new ApiResponse<List<int>>(false, $"An error occurred: {ex.Message}");
             }
         }
+
 
         public async Task<List<Food>> GetFoodsByMealIds(List<int> mealIds)
         {

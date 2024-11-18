@@ -55,7 +55,7 @@
   <!-- Add/Edit/Delete Section -->
   <div class="col-4">
     <app-add-meal *ngIf="!editing && !deleting" (success)="refreshList()"></app-add-meal>
-    <!-- <app-update-meal 
+    <app-update-meal 
       *ngIf="editing"
       [meal]="selectedMeal"
       (close)="cancelEdit()"
@@ -66,6 +66,6 @@
       [meal]="selectedMeal"
       (close)="cancelDelete()"
       (success)="refreshList()"
-    ></app-delete-meal> -->
+    ></app-delete-meal> 
   </div>
 </div>

@@ -15,15 +15,26 @@ export class MealService {
   }
 
   getFoodsByMealIds(mealIds: number[]): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/Food/foods-by-meal-ids`, mealIds);
+    return this.http.post<any>(
+      `${this.apiUrl}/Food/foods-by-meal-ids`,
+      mealIds
+    );
+  }
+
+  getFoodsByMealId(mealId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Food/meal/${mealId}`);
   }
 
   addMeal(meal: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Meal`, meal);
   }
 
-  addFoodDetailsBulk(mealId: number, foodDetails: any[]): Observable<any> {
-    const body = foodDetails.map((food) => ({ ...food, mealId }));
-    return this.http.post(`${this.apiUrl}/FoodDetails/add-food-details-bulk`, body);
+  addFoodsBulk(foods: any[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Food/bulk-add`, foods);
+  }
+
+  // Delete meal by ID
+  deleteMeal(mealId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/Meal/${mealId}`);
   }
 }

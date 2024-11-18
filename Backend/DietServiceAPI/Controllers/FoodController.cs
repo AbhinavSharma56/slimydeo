@@ -39,13 +39,24 @@ namespace DietServiceAPI.Controllers
             return Ok(response); // Return success response
         }
 
-        // POST: api/food
         [HttpPost("add")]
         public async Task<ActionResult<ApiResponse<Food>>> CreateFood(Food food)
         {
+            if (food == null)
+            {
+                return BadRequest(new ApiResponse<Food>(false, "Food object is null."));
+            }
+
             var response = await _foodRepository.AddFoodAsync(food);
-            return CreatedAtAction(nameof(GetFood), new { id = response.Data.FoodId }, response); // Return the success response
+
+            if (response == null || response.Data == null)
+            {
+                return StatusCode(500, new ApiResponse<Food>(false, "Failed to add food."));
+            }
+
+            return CreatedAtAction(nameof(GetFood), new { id = response.Data.FoodId }, response);
         }
+
 
         // PUT: api/food/{id}
         [HttpPut("{id}")]
@@ -99,13 +110,14 @@ namespace DietServiceAPI.Controllers
 
             var response = await _foodRepository.AddMultipleFoodsAsync(foods);
 
-            if (response.Success)
+            if (response == null || !response.Success)
             {
-                return Ok(response);
+                return StatusCode(500, new ApiResponse<List<int>>(false, "Failed to add foods or their details."));
             }
 
-            return StatusCode(500, response); // Return a 500 Internal Server Error if something went wrong
+            return Ok(response);
         }
+
 
 
         [HttpPost("foods-by-meal-ids")]

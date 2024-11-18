@@ -93,7 +93,7 @@
 }
 
 .card-header {
-  background-color: #003276 !important; /* Change this line to #003276 */
+  background: linear-gradient(135deg, #003276, #008152);
   color: #ffffff; /* Keep text white */
   padding: 10px;
   font-size: 1.25rem;

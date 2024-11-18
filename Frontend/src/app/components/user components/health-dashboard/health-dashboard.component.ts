@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './health-dashboard.component.html',
-  styleUrl: './health-dashboard.component.css'
+  styleUrls: ['./health-dashboard.component.css'],
 })
 export class HealthDashboardComponent {
   healthMetricsObj = {
@@ -17,13 +17,14 @@ export class HealthDashboardComponent {
     username: '',
     metricId: 0,
     value: 0,
-    dateRecorded: ''
+    dateRecorded: '',
   };
 
   submittedLogs: any[] = [];
-  metrics: any[] = []; // To store metrics fetched from the backend
+  metrics: any[] = [];
   isSubmitting = false;
-  isEditing = false;
+
+  username = localStorage.getItem('loggedUser');
 
   constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
 
@@ -33,24 +34,35 @@ export class HealthDashboardComponent {
   }
 
   fetchMetrics(): void {
-    this.http.get<any[]>('https://localhost:7211/api/HealthMetrics/metrics')
-      .subscribe(data => {
-        this.metrics = data; // Store the metrics data
+    this.http
+      .get<any[]>('https://localhost:7211/api/HealthMetrics/metrics')
+      .subscribe((data) => {
+        this.metrics = data;
         this.cd.detectChanges();
       });
   }
 
   fetchHealthMetricsLogs(): void {
-    this.http.get<any[]>('https://localhost:7211/api/HealthMetrics/metrics/logs')
-      .subscribe(data => {
-        this.submittedLogs = data;
+    this.http
+      .get<any[]>(
+        `https://localhost:7211/api/HealthMetrics/metrics/logs/7days/${this.username}`
+      )
+      .subscribe((data) => {
+        // Sort logs by date in descending order
+        this.submittedLogs = data.sort(
+          (a, b) =>
+            new Date(b.dateRecorded).getTime() -
+            new Date(a.dateRecorded).getTime()
+        );
         this.cd.detectChanges();
       });
   }
 
   onSubmit(): void {
-    // Validate if metricId is properly selected
-    if (!this.healthMetricsObj.metricId || this.healthMetricsObj.metricId <= 0) {
+    if (
+      !this.healthMetricsObj.metricId ||
+      this.healthMetricsObj.metricId <= 0
+    ) {
       alert('Please select a valid metric from the dropdown.');
       return;
     }
@@ -61,13 +73,17 @@ export class HealthDashboardComponent {
 
     this.isSubmitting = true;
 
-    this.http.post("https://localhost:7211/api/HealthMetrics/metrics/logs", this.healthMetricsObj)
+    this.http
+      .post(
+        'https://localhost:7211/api/HealthMetrics/metrics/logs',
+        this.healthMetricsObj
+      )
       .subscribe((res: any) => {
         if (res.logId >= 0) {
-          alert("Health Metric Log Created!");
-          this.submittedLogs.push(res); // Add the new log
+          alert('Health Metric Log Created!');
+          this.submittedLogs.unshift(res); // Add the new log to the top
         } else {
-          alert("Problem in Creating Log");
+          alert('Problem in Creating Log');
         }
         this.isSubmitting = false;
         this.resetForm();
@@ -81,14 +97,12 @@ export class HealthDashboardComponent {
       username: '',
       metricId: 0,
       value: 0,
-      dateRecorded: ''
+      dateRecorded: '',
     };
-    this.isEditing = false;
   }
 
-  // Helper function to get metric name by ID
-  getMetricName(metricId: number): string {
-    const metric = this.metrics.find(m => m.metricId === metricId);
-    return metric ? metric.metricName : 'Unknown Metric';
+  getMetricNameAndUnit(metricId: number): string {
+    const metric = this.metrics.find((m) => m.metricId === metricId);
+    return metric ? `${metric.metricName} (${metric.unit})` : 'Unknown Metric';
   }
 }
