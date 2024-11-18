@@ -16,7 +16,7 @@ export class MoodTypeComponent {
     moodId: 0,
     moodName: '',
     description: '',
-    createdBy: 0,
+    createdBy: '',
     createdAt: ''
   };
 
@@ -94,7 +94,7 @@ export class MoodTypeComponent {
       moodId: 0,
       moodName: '',
       description: '',
-      createdBy: 0,
+      createdBy: '',
       createdAt: ''
     };
     this.isEditing = false; // Reset editing flag
