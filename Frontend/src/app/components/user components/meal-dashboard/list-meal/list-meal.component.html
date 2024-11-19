@@ -5,12 +5,15 @@
       <div class="card-header text-center bg-dark text-white">Meal List</div>
       <div class="card-body">
         <!-- Loading Spinner -->
-        <div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+        <div
+          *ngIf="loading"
+          class="d-flex justify-content-center align-items-center"
+          style="height: 300px"
+        >
           <div class="spinner-border" role="status">
             <span class="sr-only"></span>
           </div>
         </div>
-        
         <div *ngIf="!loading">
           <div class="table-responsive">
             <table class="table table-bordered table-striped table-light">
@@ -24,22 +27,34 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of mealList; let i = index">
+                <tr
+                  *ngFor="let item of mealList; let i = index"
+                  (click)="showDetails(item)"
+                  style="cursor: pointer"
+                  title="Click for more details"
+                >
                   <td>{{ i + 1 }}</td>
-                  <td>{{ item.consumptionDate | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ item.consumptionDate | date : "yyyy-MM-dd" }}</td>
                   <td>{{ item.mealType }}</td>
                   <td>
                     <ul>
                       <li *ngFor="let food of item.foods">
-                        {{ food.foodName }} - {{ food.quantity }} {{ food.unit }}
+                        {{ food.foodName }} - {{ food.quantity }}
+                        {{ food.unit }}
                       </li>
                     </ul>
                   </td>
                   <td>
-                    <button class="btn btn-primary me-2 btn-black" (click)="onEdit(item)">
+                    <button
+                      class="btn btn-primary me-2 btn-black"
+                      (click)="onEdit(item, $event)"
+                    >
                       Edit
                     </button>
-                    <button class="btn btn-danger" (click)="onDelete(item)">
+                    <button
+                      class="btn btn-danger"
+                      (click)="onDelete(item, $event)"
+                    >
                       Delete
                     </button>
                   </td>
@@ -54,19 +69,30 @@
 
   <!-- Add/Edit/Delete Section -->
   <div class="col-4">
-    <app-add-meal *ngIf="!editing && !deleting" (success)="refreshList()"></app-add-meal>
-    <app-update-meal 
+    <app-add-meal
+      *ngIf="!editing && !deleting && !showingDetails"
+      (success)="refreshList()"
+    ></app-add-meal>
+    <app-update-meal
       *ngIf="editing"
       [meal]="selectedMeal"
       (close)="cancelEdit()"
       (success)="refreshList()"
-      (reload)="refreshList()">
-    ></app-update-meal>
+      (reload)="refreshList()"
+    >
+      ></app-update-meal
+    >
     <app-delete-meal
       *ngIf="deleting"
       [meal]="selectedMeal"
       (close)="cancelDelete()"
       (success)="refreshList()"
-    ></app-delete-meal> 
+    ></app-delete-meal>
+    <!-- Meal Details Section -->
+    <app-meal-details
+      *ngIf="showingDetails"
+      [meal]="selectedMeal"
+      (close)="closeDetails()"
+    ></app-meal-details>
   </div>
 </div>

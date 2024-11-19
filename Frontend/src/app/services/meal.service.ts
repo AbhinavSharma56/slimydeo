@@ -46,4 +46,8 @@ export class MealService {
   updateFoodBulk(foods: any[]): Observable<any> {
     return this.http.put(`${this.apiUrl}/Food/bulk-update`, foods);
   }
+
+  getFoodDetailsByIds(foodIds: number[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/FoodDetails/food-details-by-food-ids`, foodIds);
+  }
 }

@@ -123,3 +123,14 @@
 .table-striped tr:nth-child(even) {
   background-color: #ffffff; /* White background for even rows */
 }
+
+/* Highlight row on hover */
+tbody tr:hover {
+  background-color: #4a6f96; /* Light gray background */
+  transition: background-color 0.2s ease;
+}
+
+/* Highlight active row */
+tbody tr.active {
+  background-color: #003276; /* Light blue background */
+}

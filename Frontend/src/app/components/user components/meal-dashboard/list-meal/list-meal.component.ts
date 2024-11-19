@@ -5,6 +5,7 @@ import { UpdateMealComponent } from '../update-meal/update-meal.component';
 import { DeleteMealComponent } from '../delete-meal/delete-meal.component';
 import { ToastrService } from 'ngx-toastr';
 import { MealService } from '../../../../services/meal.service'; // Assuming you have this service
+import { MealDetailsComponent } from '../meal-details/meal-details.component';
 
 @Component({
   selector: 'app-list-meal',
@@ -14,6 +15,7 @@ import { MealService } from '../../../../services/meal.service'; // Assuming you
     AddMealComponent,
     UpdateMealComponent,
     DeleteMealComponent,
+    MealDetailsComponent,
   ],
   templateUrl: './list-meal.component.html',
   styleUrl: './list-meal.component.css',
@@ -25,6 +27,7 @@ export class ListMealComponent implements OnInit {
   selectedMeal: any = null;
   loading: boolean = false; // To show loading spinner
   retryTimeout: any = null; // To track retry timeout
+  showingDetails = false; // Control visibility of the details component
 
   constructor(
     private mealService: MealService,
@@ -105,10 +108,12 @@ export class ListMealComponent implements OnInit {
     }
   }
 
-  onEdit(meal: any): void {
+  onEdit(meal: any, event: Event): void {
+    event.stopPropagation(); // Prevent row click events if necessary
     this.selectedMeal = meal;
     this.editing = true;
     this.deleting = false;
+    this.showingDetails = false;
   }
 
   cancelEdit(): void {
@@ -116,14 +121,30 @@ export class ListMealComponent implements OnInit {
     this.selectedMeal = null;
   }
 
-  onDelete(meal: any): void {
+  onDelete(meal: any, event: Event): void {
+    event.stopPropagation(); // Prevent row click events if necessary
     this.selectedMeal = meal;
     this.deleting = true;
     this.editing = false;
+    this.showingDetails = false;
   }
 
   cancelDelete(): void {
     this.deleting = false;
+    this.selectedMeal = null;
+  }
+
+  // Show meal details when a table row is clicked
+  showDetails(meal: any): void {
+    this.selectedMeal = meal;
+    this.showingDetails = true;
+    this.editing = false;
+    this.deleting = false;
+  }
+
+  // Close the details view
+  closeDetails(): void {
+    this.showingDetails = false;
     this.selectedMeal = null;
   }
 
