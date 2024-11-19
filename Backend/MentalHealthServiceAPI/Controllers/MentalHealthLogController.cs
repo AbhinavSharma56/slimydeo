@@ -42,11 +42,18 @@ namespace MentalHealthServiceAPI.Controllers
         {
             if (mentalHealthLog == null)
             {
-                return BadRequest("Mental Health Log is null.");
+                return BadRequest(new ResponseDto {
+                    Success = false,
+                    Message = "Mental Health Log is null."
+                });
             }
 
             await _mentalHealthLogRepository.InsertMentalHealthLogAsync(mentalHealthLog);
-            return CreatedAtAction(nameof(Get), new { id = mentalHealthLog.LogId }, mentalHealthLog);
+            return Ok(new ResponseDto
+            {
+                Success = true,
+                Message = "Added Mental health Log Successfully."
+            });
         }
 
         // PUT: api/mentalHealthLog/5
@@ -79,15 +86,28 @@ namespace MentalHealthServiceAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            // Check if the mental health log exists
             var mentalHealthLog = await _mentalHealthLogRepository.GetMentalHealthLogByIdAsync(id);
             if (mentalHealthLog == null)
             {
-                return NotFound("Mental Health Log not found.");
+                return NotFound(new ResponseDto
+                {
+                    Success = false,
+                    Message = "Mental Health Log not found."
+                });
             }
 
+            // Delete the log
             await _mentalHealthLogRepository.DeleteMentalHealthLogAsync(id);
-            return Ok("Mental Health Log deleted successfully.");
+
+            // Return success response
+            return Ok(new ResponseDto
+            {
+                Success = true,
+                Message = "Mental Health Log deleted successfully."
+            });
         }
+
 
         // GET: api/mentalHealthLog/user/{username}
         [HttpGet("user/{username}")]
@@ -100,5 +120,12 @@ namespace MentalHealthServiceAPI.Controllers
             }
             return Ok(mentalHealthLog);
         }
+
+        public class ResponseDto
+        {
+            public bool Success { get; set; }
+            public string Message { get; set; } = string.Empty;
+        }
+
     }
 }

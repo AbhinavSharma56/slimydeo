@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.checkPasswordsMatch();
-    this.validateRole();
+    // this.validateRole();
 
     if (!this.passwordsMatch) {
       this.toastrService.error('Passwords do not match!', 'Error');
@@ -154,6 +154,7 @@ export class RegisterComponent implements OnInit {
     this.registerObj.userName = this.registerObj.email;
     this.registerDetailsObj.email = this.registerObj.email; // Update registerDetailsObj's email
     this.registerDetailsObj.username = this.registerObj.userName; // Update registerDetailsObj's username
+    this.registerObj.role = "USER"; // Update registerDetailsObj's role
 
     this.authService.registerUser(this.registerObj).subscribe(
       (res: any) => {

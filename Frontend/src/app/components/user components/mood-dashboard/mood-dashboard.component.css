@@ -1,87 +1,228 @@
-/* Form and Table Styles */
-.form-container,
-.table-container {
-  background-color: #fff;
+.container {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Card Styling */
+.card {
   border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 50, 118, 0.1);
+  margin-bottom: 20px;
 }
 
-.form-group label {
-  font-weight: bold;
-  font-size: 14px;
-  color: rgb(99, 39, 120);
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: #ba68c8;
-  outline: none;
-  box-shadow: 0 0 5px rgba(186, 104, 200, 0.5);
-}
-
-.profile-button {
-  background: rgb(99, 39, 120);
-  border: none;
-  padding: 10px;
-  font-size: 16px;
+/* Card Header Styling */
+.card-header {
+  background: linear-gradient(135deg, #003276, #008152);
   color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Table Styling */
+.table {
+  margin-bottom: 0;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
-.profile-button:hover {
-  background: #682773;
+.table-striped tr:nth-child(odd) {
+  background-color: #f8f9fa;
 }
 
-.table-header {
-  background-color: rgb(99, 39, 120);
+.table-striped tr:nth-child(even) {
+  background-color: white;
 }
 
-input[type="range"] {
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Button Styling */
+.btn-danger {
+  background-color: #e53935;
+  border-color: #e53935;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+/* Range Input Styling */
+.form-control-range {
+  width: 100%;
+}
+
+/* Container for row with scrollable content */
+.row {
+  overflow-y: auto; /* Allow vertical scrolling */
+  max-height: 600px; /* Maximum height for scrollable area */
+}
+
+.card {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 50, 118, 0.1);
+}
+
+
+
+.card-body {
+  padding: 20px;
+}
+
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #000;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
+}
+
+/* Table with responsive design and vertical scrolling */
+.table-responsive {
+  max-height: 70vh;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  overflow-y: auto; /* Allow vertical scrolling */
+  margin-bottom: 20px; /* Spacing between table and next section */
+}
+
+/* Style for alert messages */
+.alert {
+  margin-top: 15px; /* Add spacing to the top */
+  font-size: 1rem; /* Ensuring consistent font size for alerts */
+}
+
+.alert-success {
+  background-color: #d4edda; /* Green background for success alerts */
+  color: #155724; /* Green text for success alerts */
+}
+
+.alert-danger {
+  background-color: #f8d7da; /* Light red background for error alerts */
+  color: #721c24; /* Dark red text for error alerts */
+}
+
+/* Buttons with a minimum width for consistency */
+.btn-primary,
+.btn-danger,
+.btn-black {
+  min-width: 100px; /* Ensure buttons have a consistent minimum width */
+  border-radius: 5px; /* Rounded button corners */
+  padding: 8px 16px; /* Padding for better button size */
+  text-align: center; /* Center text inside the button */
+  font-size: 1rem; /* Consistent font size */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Primary button style */
+.btn-primary {
+  background-color: #003276; /* Dark blue background */
+  border-color: #003276; /* Dark blue border */
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #008152; /* Light green on hover */
+  border-color: #008152;
+}
+
+/* Danger button style (e.g., for delete) */
+.btn-danger {
+  background-color: #e53935; /* Red background */
+  border-color: #e53935; /* Red border */
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  border-color: #d32f2f;
+}
+
+/* Black button style */
+.btn-black {
+  background-color: #003276; /* Dark blue background */
+  color: white;
+  border: none;
+}
+
+.btn-black:hover {
+  background-color: #008152; /* Green hover effect */
+}
+
+/* Form group with bottom margin for spacing */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Form container with consistent styling */
+.form-container {
+  max-width: 100%;
   width: 100%; /* Full width */
-  -webkit-appearance: none;
-  appearance: none;
-  background: linear-gradient(to right, #003276, #008152); /* Gradient for track */
-  height: 5px;
+  margin: 50px 20px 50px 50px; /* Spacing around the form */
+  padding: 20px;
+  background-color: #ffffff; /* White background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 50, 118, 0.1); /* Soft shadow using header color */
+  font-family: "Montserrat", sans-serif; /* Common font family */
+}
+
+.card-header {
+  background: linear-gradient(135deg, #003276, #008152);
+  color: #ffffff; /* Keep text white */
+  padding: 10px;
+  font-size: 1.25rem;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Ensuring smooth look for scrollable tables */
+.table-bordered {
+  border: 1px solid #dee2e6;
   border-radius: 5px;
-  outline: none;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #003276; /* Thumb color */
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.table-light {
+  background-color: #f8f9fa; /* Light background for the table */
 }
 
-input[type="range"]:focus::-webkit-slider-thumb {
-  background: #008152; /* Highlight thumb on focus */
+.table-light tr:hover {
+  background-color: #f1f1f1; /* Subtle hover effect */
 }
 
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #003276;
-  cursor: pointer;
+.table-striped tr:nth-child(odd) {
+  background-color: #f8f9fa; /* Light background for odd rows */
 }
 
-input[type="range"]:focus::-moz-range-thumb {
-  background: #008152;
+.table-striped tr:nth-child(even) {
+  background-color: #ffffff; /* White background for even rows */
+}
+
+/* Highlight row on hover */
+tbody tr:hover {
+  background-color: #4a6f96; /* Light gray background */
+  transition: background-color 0.2s ease;
+}
+
+/* Highlight active row */
+tbody tr.active {
+  background-color: #003276; /* Light blue background */
 }

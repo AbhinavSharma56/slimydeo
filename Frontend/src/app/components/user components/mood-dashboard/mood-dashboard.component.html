@@ -1,103 +1,119 @@
 <router-outlet></router-outlet>
 
-<div class="container">
-  <h2>Mental Health Logs</h2>
-
-  <!-- Add Mental Health Log Form -->
-  <form (ngSubmit)="addLog()" #logForm="ngForm">
-    
-
-    <div class="form-group mb-3">
-      <label for="moodName">Mood:</label>
-      <select
-        id="moodName"
-        class="form-control"
-        [(ngModel)]="newLog.moodId"
-        name="moodName"
-        required
-      >
-        <option value="" disabled selected>Select a Mood</option>
-        <option *ngFor="let mood of moods" [value]="mood.moodId">
-          {{ mood.moodName }}
-        </option>
-      </select>
-    </div>
-    
-
-      <div class="form-group">
-        <label for="intensity">Intensity:</label>
-        <input
-          type="range"
-          id="intensity"
-          class="form-control-range"
-          [(ngModel)]="newLog.intensity"
-          name="intensity"
-          min="1"
-          max="10"
-          step="1"
-        />
-        <div class="d-flex justify-content-between mt-2">
-          <span>1</span>
-          <span>10</span>
+<div class="container mt-4">
+  <div class="row">
+    <!-- Mental Health Logs Table (Left - 2/3 of the page) -->
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3>Mental Health Logs</h3>
         </div>
-        <div class="text-center mt-2">
-          Selected Value: <strong>{{ newLog.intensity }}</strong>
+        <div class="card-body">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Mood</th>
+                <th>Description</th>
+                <th>Intensity</th>
+                <th>Notes</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of submittedLogs">
+                <td>{{ log.moodName }}</td>
+                <td>{{ log.moodDescription }}</td>
+                <td>{{ log.intensity }}</td>
+                <td>{{ log.notes }}</td>
+                <td>{{ log.logDate | date : "short" }}</td>
+                <td>
+                  <button
+                    (click)="deleteLog(log.logId)"
+                    class="btn btn-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      
-
-    <div class="form-group">
-      <label for="notes">Notes:</label>
-      <textarea
-        id="notes"
-        class="form-control"
-        [(ngModel)]="newLog.notes"
-        name="notes"
-      ></textarea>
     </div>
 
-    <div class="form-group">
-      <label for="logDate">Date:</label>
-      <input
-        type="date"
-        id="logDate"
-        class="form-control"
-        [(ngModel)]="newLog.logDate"
-        name="logDate"
-      />
+    <!-- Add Mental Health Log Form (Right - 1/3 of the page) -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Add Mental Health Log</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="addLog()" #logForm="ngForm">
+            <div class="form-group mb-3">
+              <label for="moodName">Mood:</label>
+              <select
+                id="moodName"
+                class="form-control"
+                [(ngModel)]="newLog.moodId"
+                name="moodName"
+                required
+              >
+                <option value="" disabled selected>Select a Mood</option>
+                <option *ngFor="let mood of moods" [value]="mood.moodId">
+                  {{ mood.moodName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="intensity">Intensity:</label>
+              <input
+                type="range"
+                id="intensity"
+                class="form-control-range"
+                [(ngModel)]="newLog.intensity"
+                name="intensity"
+                min="1"
+                max="10"
+                step="1"
+              />
+              <div class="d-flex justify-content-between mt-2">
+                <span>1</span>
+                <span>10</span>
+              </div>
+              <div class="text-center mt-2">
+                Selected Value: <strong>{{ newLog.intensity }}</strong>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="notes">Notes:</label>
+              <textarea
+                id="notes"
+                class="form-control"
+                [(ngModel)]="newLog.notes"
+                name="notes"
+              ></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="logDate">Date:</label>
+              <input
+                type="date"
+                id="logDate"
+                class="form-control"
+                [(ngModel)]="newLog.logDate"
+                name="logDate"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+              Submit Log
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit Log</button>
-  </form>
-
-  <hr />
-
-  <!-- Mental Health Logs Table -->
-  <h3>Submitted Mental Health Logs</h3>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Mood</th>
-        <th>Description</th>
-        <th>Intensity</th>
-        <th>Notes</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let log of submittedLogs">
-        <td>{{ log.moodName }}</td>
-        <td>{{ log.moodDescription }}</td>
-        <td>{{ log.intensity }}</td>
-        <td>{{ log.notes }}</td>
-        <td>{{ log.logDate | date : "short" }}</td>
-        <td>
-          <button (click)="deleteLog(log.id)" class="btn btn-danger">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
 </div>
