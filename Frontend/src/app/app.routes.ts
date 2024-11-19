@@ -23,6 +23,11 @@ import { MoodTypeComponent } from './components/admin components/mood-type/mood-
 import { UserDataComponent } from './components/admin components/user-data/user-data.component';
 import { MetricTypeComponent } from './components/admin components/metric-type/metric-type.component';
 import { AboutComponent } from './components/about/about.component';
+import { MealDetailsComponent } from './components/user components/meal-dashboard/meal-details/meal-details.component';
+import { ListMetricLogComponent } from './components/user components/health-dashboard/list-metric-log/list-metric-log.component';
+import { AddMetricLogComponent } from './components/user components/health-dashboard/add-metric-log/add-metric-log.component';
+import { UpdateMetricLogComponent } from './components/user components/health-dashboard/update-metric-log/update-metric-log.component';
+import { DeleteMetricLogComponent } from './components/user components/health-dashboard/delete-metric-log/delete-metric-log.component';
 
 export const routes: Routes = [
     { 
@@ -64,6 +69,26 @@ export const routes: Routes = [
             {
                 path: 'health',
                 component: HealthDashboardComponent,
+                children: [
+                    {
+                        path: '',
+                        component: ListMetricLogComponent,
+                        children: [
+                            {
+                                path: 'add',
+                                component: AddMetricLogComponent
+                            },
+                            {
+                                path: 'update',
+                                component: UpdateMetricLogComponent
+                            },
+                            {
+                                path: 'delete',
+                                component: DeleteMetricLogComponent
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 path: 'exercise',
@@ -88,6 +113,10 @@ export const routes: Routes = [
                             {
                                 path: 'delete',
                                 component: DeleteMealComponent
+                            },
+                            {
+                                path: 'details',
+                                component: MealDetailsComponent
                             }
                         ]
                     }
