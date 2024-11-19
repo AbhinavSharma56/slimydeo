@@ -56,7 +56,6 @@ export class ListMealComponent implements OnInit {
             console.log(response);
             // Fetch the foods for each meal
             this.getFoodsForMeals();
-            this.toastr.success('Meals retrieved successfully');
           } else {
             this.toastr.error(response.message || 'Failed to load meals');
           }
@@ -98,7 +97,7 @@ export class ListMealComponent implements OnInit {
                 (food: any) => food.mealId === meal.mealId
               );
             });
-            this.toastr.success('Foods retrieved successfully');
+            this.toastr.success('Meal and Food Details retrieved successfully');
           } else {
             this.toastr.error(response.message || 'Failed to load foods');
           }
