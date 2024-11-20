@@ -18,12 +18,18 @@ export class MoodDashboardComponent {
   newLog: any = {
     username: '',
     moodId: 0,
-    intensity: 1,
+    intensity: 5, // Default intensity value
     notes: '',
     logDate: this.getCurrentDateTime(),
   };
   moods: any[] = [];
   maxDate: string = "";
+
+  // Method to calculate the gradient based on the slider value
+  getSliderGradient(): string {
+    const percentage = ((this.newLog.intensity - 1) / 9) * 100; // Convert intensity to percentage (1-10 mapped to 0%-100%)
+    return `linear-gradient(90deg, #003276 ${percentage}%, #008152 ${percentage}%)`;
+  }
 
   getCurrentDateTime(): string {
     const now = new Date();

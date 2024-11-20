@@ -226,3 +226,40 @@ tbody tr:hover {
 tbody tr.active {
   background-color: #003276; /* Light blue background */
 }
+
+.custom-slider {
+  width: 100%;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #008152;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #008152;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #008152;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
