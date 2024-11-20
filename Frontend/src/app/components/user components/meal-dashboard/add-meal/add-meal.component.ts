@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MealService } from '../../../../services/meal.service';
@@ -11,8 +11,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-meal.component.html',
   styleUrls: ['./add-meal.component.css'], // Corrected property name
 })
-export class AddMealComponent {
+export class AddMealComponent implements OnInit {
   @Output() success = new EventEmitter<void>();
+  maxDate: string = "";
 
   meal = {
     mealId: 0,
@@ -50,6 +51,10 @@ export class AddMealComponent {
     private toastr: ToastrService
   ) {}
 
+  ngOnInit(): void {
+    this.maxDate = this.getCurrentDateTime();
+  } 
+  
   username = localStorage.getItem('loggedUser');
 
   // Helper method to get current date and time in 'YYYY-MM-DDTHH:mm' format

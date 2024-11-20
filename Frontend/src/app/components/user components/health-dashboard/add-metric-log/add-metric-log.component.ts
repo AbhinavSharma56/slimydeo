@@ -15,6 +15,7 @@ export class AddMetricLogComponent {
   @Output() success = new EventEmitter<void>();
   loading: boolean = false; // Loading state
   metricsList: any[] = []; // Complete list of metrics
+  maxDate: string = "";
 
   healthMetricLog = {
     logId: 0,
@@ -30,6 +31,7 @@ export class AddMetricLogComponent {
   ) {}
 
   ngOnInit(): void {
+    this.maxDate = this.getCurrentDateTime();
     this.loadMetricsList(); // Load metrics when component initializes
   }
 

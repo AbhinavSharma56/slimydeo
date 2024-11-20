@@ -26,10 +26,12 @@ export class ExerciseDashboardComponent {
   isSubmitting = false;
   exerciseTypes: any[] = [];
   submittedLogs: any[] = [];
+  maxDate: string = "";
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   ngOnInit(): void {
+    this.maxDate = this.getCurrentDateTime();
     this.fetchPhysicalActivityLogs();
     this.fetchExerciseTypes();
   }

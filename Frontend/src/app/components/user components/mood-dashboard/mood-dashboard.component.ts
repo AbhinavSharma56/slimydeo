@@ -23,6 +23,7 @@ export class MoodDashboardComponent {
     logDate: this.getCurrentDateTime(),
   };
   moods: any[] = [];
+  maxDate: string = "";
 
   getCurrentDateTime(): string {
     const now = new Date();
@@ -38,6 +39,7 @@ export class MoodDashboardComponent {
   ) {}
 
   ngOnInit(): void {
+    this.maxDate = this.getCurrentDateTime();
     this.loadMoods();
     this.fetchMentalHealthLogs(); // Fetch existing logs on component initialization
   }

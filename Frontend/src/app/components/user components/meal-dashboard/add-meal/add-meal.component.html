@@ -22,6 +22,7 @@
           type="datetime-local"
           [(ngModel)]="meal.consumptionDate"
           name="consumptionDate"
+          [max]="maxDate"
           class="form-control"
           required
         />
