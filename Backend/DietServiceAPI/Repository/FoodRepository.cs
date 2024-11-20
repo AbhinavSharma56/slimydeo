@@ -136,9 +136,7 @@ namespace DietServiceAPI.Repository
                     bool isFoodDetailsAdded = await _foodDetailsService.AddFoodDetails(food.FoodId, food.FoodName, food.Quantity, food.Unit);
                     if (!isFoodDetailsAdded)
                     {
-                        // Log or handle the failure to add food details for a particular food item.
-                        // You can return a failure message or continue with others.
-                        // Here, I'm just logging it and continuing.
+                        // Logging the failure to add food details for a particular food item.
                         Console.WriteLine($"Failed to add details for FoodId: {food.FoodId}");
                     }
                 }
