@@ -24,6 +24,7 @@
                   <th>Metric</th>
                   <th>Description</th>
                   <th>Value</th>
+                  <th>Date Recorded</th>
                   <!-- <th>Actions</th> -->
                 </tr>
               </thead>
@@ -33,6 +34,7 @@
                   <td>{{ log.metricName }} ({{ log.metricUnit }})</td>
                   <td>{{ log.metricDescription }}</td>
                   <td>{{ log.value }}</td>
+                  <td>{{ log.dateRecorded | date}}</td>
                   <!-- <td>
                   <button
                       class="btn btn-primary me-2 btn-black"

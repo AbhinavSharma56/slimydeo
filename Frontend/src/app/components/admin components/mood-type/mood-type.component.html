@@ -4,7 +4,7 @@
     <!-- Form Section -->
     <div class="col-md-5">
       <div class="form-container shadow-sm p-4 mb-5 rounded">
-        <h3 class="text-center mb-4">
+        <h3 class="text-center mb-4 card-header">
           {{ isEditing ? "Edit Mood Type" : "Create Mood Type" }}
         </h3>
         <form (ngSubmit)="onSubmit()" #moodTypeForm="ngForm">
@@ -67,8 +67,8 @@
 
     <!-- Table Section -->
     <div class="col-md-7">
-      <div class="table-container shadow-sm p-4 rounded">
-        <h3 class="text-center mb-4">Submitted Mood Types</h3>
+      <div class="table-container shadow-sm p-4 rounded ">
+        <h3 class="text-center mb-4 card-header">Submitted Mood Types</h3>
         <div *ngIf="submittedMoodTypes.length > 0">
           <table class="table table-hover table-striped">
             <thead class="table-header text-white">
@@ -91,7 +91,7 @@
                 <td>
                   <button
                     (click)="editMood(mood)"
-                    class="btn btn-warning btn-sm"
+                    class="btn btn-primary btn-sm"
                   >
                     Edit
                   </button>

@@ -54,33 +54,27 @@ export class AddMetricLogComponent {
   }
 
   addHealthMetricLog(): void {
-    if (this.healthMetricLog.username) {
-      if (this.healthMetricLog.metricId) {
-        if (this.healthMetricLog.value != 0) {
-          this.healthMetricsService
-            .addMetricLog(this.healthMetricLog)
-            .subscribe({
-              next: (response) => {
-                if (response.success) {
-                  this.toastr.success('Health Metric Log added successfully.');
-                  this.success.emit();
-                  this.resetForm();
-                } else {
-                  this.toastr.error(
-                    response.message || 'Failed to add metric log.'
-                  );
-                }
-              },
-              error: () => this.toastr.error('Failed to add metric log.'),
-            });
-        } else {
-          this.toastr.error('Please enter a value.');
-        }
+    if (this.healthMetricLog.metricId) {
+      if (this.healthMetricLog.value != 0) {
+        this.healthMetricsService.addMetricLog(this.healthMetricLog).subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.toastr.success('Health Metric Log added successfully.');
+              this.success.emit();
+              this.resetForm();
+            } else {
+              this.toastr.error(
+                response.message || 'Failed to add metric log.'
+              );
+            }
+          },
+          error: () => this.toastr.error('Failed to add metric log.'),
+        });
       } else {
-        this.toastr.error('Please select a Metric.');
+        this.toastr.error('Please enter a value.');
       }
     } else {
-      this.toastr.error('User not logged in.');
+      this.toastr.error('Please select a Metric.');
     }
   }
 
