@@ -17,20 +17,26 @@ export class ExerciseTypeComponent {
     exerciseName: '',
     description: '',
     createdBy: '',
-    createdAt: '',
+    createdAt: this.getCurrentDateTime(),
   };
+
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Format for datetime-local input
+  }
 
   // Array to hold fetched exercises
   submittedExercises: any[] = [];
   isSubmitting = false; // Track the submission status
   isEditing = false; // Track if the form is in edit mode
+  admin = localStorage.getItem('loggedUser');
 
   constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
 
   // Function to handle the form submission
   onSubmit(): void {
     this.isSubmitting = true;
-
+    this.exerciseObj.createdBy = this.admin!;
     if (this.exerciseObj.exerciseTypeId === 0) {
       // If exerciseTypeId is 0, it's a new log, so POST request is made
       this.http
@@ -117,7 +123,7 @@ export class ExerciseTypeComponent {
       exerciseName: '',
       description: '',
       createdBy: '',
-      createdAt: '',
+      createdAt: this.getCurrentDateTime(),
     };
     this.isEditing = false; // Reset editing flag
   }

@@ -17,9 +17,13 @@ export class MoodTypeComponent {
     moodName: '',
     description: '',
     createdBy: '',
-    createdAt: ''
+    createdAt: this.getCurrentDateTime()
   };
 
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Format for datetime-local input
+  }
   // Array to hold fetched mood types
   submittedMoodTypes: any[] = [];
   isSubmitting = false;  // Track the submission status
@@ -30,7 +34,7 @@ export class MoodTypeComponent {
   // Function to handle the form submission
   onSubmit(): void {
     this.isSubmitting = true;
-
+    this.moodTypeObj.createdBy = localStorage.getItem('loggedUser')!;
     if (this.moodTypeObj.moodId === 0) {
       // If moodId is 0, it's a new mood type, so POST request is made
       this.http.post("https://localhost:7283/api/Mood", this.moodTypeObj)
@@ -95,7 +99,7 @@ export class MoodTypeComponent {
       moodName: '',
       description: '',
       createdBy: '',
-      createdAt: ''
+      createdAt: this.getCurrentDateTime()
     };
     this.isEditing = false; // Reset editing flag
   }

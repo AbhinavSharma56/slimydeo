@@ -103,72 +103,84 @@ namespace ExerciseServiceAPI.Controllers
             var exerciseLog = await _exerciseLogRepository.GetExerciseLogByIdAsync(id);
             if (exerciseLog == null)
             {
-                return NotFound("Exercise Log not found.");
+                return NotFound(new ResponseDto
+                {
+                    Success = false,
+                    Message = "Exercise Log not found."
+                });
             }
 
             await _exerciseLogRepository.DeleteExerciseLogAsync(id);
-            return Ok("Exercise Log deleted successfully.");
-        }
-
-        // GET: api/exerciselog/total-calories/{userId}/7days
-        [HttpGet("total-calories/{username}/7days")]
-        public async Task<IActionResult> GetTotalCaloriesBurnedPerDay(string username)
-        {
-            var (success, message, data) = await _exerciseService.GetTotalCaloriesBurnedPerDayAsync(username);
-
-            if (!success)
+            return Ok(new ResponseDto
             {
-                return NotFound(new { success, message });
-            }
-
-            return Ok(new { success, message, data });
-        }
-
-        // GET: api/exerciselog/user/{username}
-        [HttpGet("user/{username}")]
-        public async Task<IActionResult> GetByUsername(string username)
-        {
-            try
-            {
-                var exerciseLogs = await _exerciseLogRepository.GetExerciseLogsByUsernameAsync(username);
-
-                if (exerciseLogs == null || !exerciseLogs.Any())
-                {
-                    return NotFound(new { Message = "No exercise logs found for the given user." });
-                }
-
-                return Ok(exerciseLogs);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (using a logging framework)
-                Console.Error.WriteLine($"Error in GetByUsername: {ex.Message}");
-                return StatusCode(500, new { Message = "An internal server error occurred." });
-            }
-        }
-
-        // GET: api/exerciselog/user/{username}/{date}
-        [HttpGet("user/{username}/{date}")]
-        public async Task<IActionResult> GetByUsernameAndDate(string username, DateTime date)
-        {
-            try
-            {
-                var exerciseLogs = await _exerciseLogRepository.GetExerciseLogsByUsernameAndDateAsync(username, date);
-
-                if (exerciseLogs == null || !exerciseLogs.Any())
-                {
-                    return NotFound(new { Message = "No exercise logs found for the given user and date." });
-                }
-
-                return Ok(exerciseLogs);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (using a logging framework)
-                Console.Error.WriteLine($"Error in GetByUsernameAndDate: {ex.Message}");
-                return StatusCode(500, new { Message = "An internal server error occurred." });
-            }
-        }
-
+                Success = true,
+                Message = "Exercise Log deleted successfully."
+            });
     }
+
+    // GET: api/exerciselog/total-calories/{userId}/7days
+    [HttpGet("total-calories/{username}/7days")]
+    public async Task<IActionResult> GetTotalCaloriesBurnedPerDay(string username)
+    {
+        var (success, message, data) = await _exerciseService.GetTotalCaloriesBurnedPerDayAsync(username);
+
+        if (!success)
+        {
+            return NotFound(new { success, message });
+        }
+
+        return Ok(new { success, message, data });
+    }
+
+    // GET: api/exerciselog/user/{username}
+    [HttpGet("user/{username}")]
+    public async Task<IActionResult> GetByUsername(string username)
+    {
+        try
+        {
+            var exerciseLogs = await _exerciseLogRepository.GetExerciseLogsByUsernameAsync(username);
+
+            if (exerciseLogs == null || !exerciseLogs.Any())
+            {
+                return NotFound(new { Message = "No exercise logs found for the given user." });
+            }
+
+            return Ok(exerciseLogs);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (using a logging framework)
+            Console.Error.WriteLine($"Error in GetByUsername: {ex.Message}");
+            return StatusCode(500, new { Message = "An internal server error occurred." });
+        }
+    }
+
+    // GET: api/exerciselog/user/{username}/{date}
+    [HttpGet("user/{username}/{date}")]
+    public async Task<IActionResult> GetByUsernameAndDate(string username, DateTime date)
+    {
+        try
+        {
+            var exerciseLogs = await _exerciseLogRepository.GetExerciseLogsByUsernameAndDateAsync(username, date);
+
+            if (exerciseLogs == null || !exerciseLogs.Any())
+            {
+                return NotFound(new { Message = "No exercise logs found for the given user and date." });
+            }
+
+            return Ok(exerciseLogs);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (using a logging framework)
+            Console.Error.WriteLine($"Error in GetByUsernameAndDate: {ex.Message}");
+            return StatusCode(500, new { Message = "An internal server error occurred." });
+        }
+    }
+    public class ResponseDto
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+    }
+}
 }

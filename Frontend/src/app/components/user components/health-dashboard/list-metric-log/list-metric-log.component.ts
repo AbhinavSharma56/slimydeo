@@ -9,11 +9,7 @@ import { HealthMetricService } from '../../../../services/health-metric.service'
 @Component({
   selector: 'app-list-metric-log',
   standalone: true,
-  imports: [
-    CommonModule,
-    AddMetricLogComponent,
-    DeleteMetricLogComponent
-  ],
+  imports: [CommonModule, AddMetricLogComponent, DeleteMetricLogComponent],
   templateUrl: './list-metric-log.component.html',
   styleUrl: './list-metric-log.component.css',
 })
@@ -50,44 +46,39 @@ export class ListMetricLogComponent {
       complete: () => (this.loading = false),
     });
   }
-
+  username = localStorage.getItem('loggedUser');
   // Load the health metrics logs for the user
   loadMetricsLogs(): void {
     this.loading = true;
-    const username =  localStorage.getItem('loggedUser');
-    if (username) {
-      this.healthMetricsService.getMetricsLogs(username).subscribe({
-        next: (response) => {
-          if (response.success) {
-            this.loadMetricsList();
-            this.healthMetricsLogs = response.data
-              .map((log: any) => {
-                const metric = this.metricsList.find(
-                  (metric) => metric.metricId === log.metricId
-                );
-                return {
-                  ...log,
-                  metricName: metric?.metricName || 'Unknown',
-                  metricUnit: metric?.unit || '',
-                  metricDescription: metric?.description || '',
-                };
-              })
-              .sort(
-                (a: any, b: any) =>
-                  new Date(b.dateRecorded).getTime() -
-                  new Date(a.dateRecorded).getTime()
+    this.healthMetricsService.getMetricsLogs(this.username!).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.loadMetricsList();
+          this.healthMetricsLogs = response.data
+            .map((log: any) => {
+              const metric = this.metricsList.find(
+                (metric) => metric.metricId === log.metricId
               );
-          } else {
-            this.toastr.error(response.message || 'Failed to load logs');
-          }
-        },
-        error: () => this.toastr.error('Error fetching health metrics logs'),
-        complete: () => (this.loading = false),
-      });
-    } else {
-      this.toastr.error('User not logged in');
-      this.loading = false;
-    }
+              return {
+                ...log,
+                metricName: metric?.metricName || 'Unknown',
+                metricUnit: metric?.unit || '',
+                metricDescription: metric?.description || '',
+              };
+            })
+            .sort(
+              (a: any, b: any) =>
+                new Date(b.dateRecorded).getTime() -
+                new Date(a.dateRecorded).getTime()
+            );
+        } else {
+          this.toastr.error(response.message || 'Failed to load logs');
+        }
+      },
+      error: () => this.toastr.error('Error fetching health metrics logs'),
+      complete: () => (this.loading = false),
+    });
+    this.loading = false;
   }
 
   // Edit action
@@ -106,7 +97,7 @@ export class ListMetricLogComponent {
 
   // Delete action
   onDelete(log: any): void {
-    console.log(log)
+    console.log(log);
     this.deleting = true;
     this.selectedLog = log;
   }

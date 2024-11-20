@@ -20,10 +20,14 @@ export class MoodDashboardComponent {
     moodId: 0,
     intensity: 1,
     notes: '',
-    logDate: '',
+    logDate: this.getCurrentDateTime(),
   };
   moods: any[] = [];
 
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 16); // Format for datetime-local input
+  }
   username = localStorage.getItem('loggedUser');
 
   constructor(
@@ -80,7 +84,7 @@ export class MoodDashboardComponent {
     if (this.newLog.username && this.newLog.moodId && this.newLog.intensity) {
       this.http.post('https://localhost:7283/api/MentalHealthLog', this.newLog).subscribe({
         next: (response: any) => {
-          if(response.Success) {
+          if(response.success) {
           this.toastr.success('Mental health log added successfully', 'Success');
           this.fetchMentalHealthLogs(); // Reload logs after adding the new one
           this.resetForm(); // Reset the form fields
@@ -105,7 +109,7 @@ export class MoodDashboardComponent {
       moodId: 0,
       intensity: 1,
       notes: '',
-      logDate: '',
+      logDate: this.getCurrentDateTime(),
     };
   }
 
@@ -115,13 +119,14 @@ export class MoodDashboardComponent {
     if (confirmDelete) {
       this.http.delete(`https://localhost:7283/api/MentalHealthLog/${logId}`).subscribe({
         next: (response: any) => {
-          if(response.Success) {
+          if(response.success) {
           this.toastr.success('Log deleted successfully', 'Success');
-          this.loadMoods();
-          this.fetchMentalHealthLogs(); // Reload logs after deletion
+          
           } else {
             this.toastr.error('Failed to delete log', 'Error');
           }
+          this.loadMoods();
+          this.fetchMentalHealthLogs(); // Reload logs after deletion
         },
         error: (error) => {
           this.loadMoods();
