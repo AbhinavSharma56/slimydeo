@@ -1,0 +1,31 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "AuthServiceAPI\\AuthServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "DietServiceAPI\\DietServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "ExerciseServiceAPI\\ExerciseServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "HealthMetricsServiceAPI\\HealthMetricsServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "MentalHealthServiceAPI\\MentalHealthServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "UserServiceAPI\\UserServiceAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      }
+    ]
+  }
+]

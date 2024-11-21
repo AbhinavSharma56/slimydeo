@@ -15,3 +15,5 @@ For Angular application, install these dependencies using npm:
   * bootstrap
   * @fontsource/montserrat
   * npm install ng-recaptcha --legacy-peer-deps
+
+Admin Registration is done by directly calling the Register endpoint in the AuthServiceAPI
